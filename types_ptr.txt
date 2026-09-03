@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    // NULL pointer
+    int *p = NULL;
+
+    // Wild pointer
+    int *q;
+
+    // Dangling pointer
+    int *r = malloc(sizeof(int));
+
+    *r = 10;
+
+    free(r);
+
+    // r is now a dangling pointer
+    r = NULL;
+
+    return 0;
+}

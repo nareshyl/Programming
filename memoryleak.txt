@@ -1,0 +1,15 @@
+#include<stdio.h>
+#include<stdlib.h>
+int* allocate(){
+    int *ptr;
+    ptr = (int*)malloc(sizeof(int));
+    return ptr;
+}
+int main(){
+    int *p;
+    p = allocate();
+    *p = 10;
+    printf("%d\t", *p);
+    free(p);
+    return 0;
+}
