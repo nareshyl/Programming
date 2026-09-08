@@ -1,0 +1,68 @@
+// 2- Dynamic memory allocation 
+#include <stdio.h>
+#include <stdlib.h>
+
+void printMatrix(int **matrix, int rows, int cols) {
+    int i, j;
+
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            printf("%d ", *(*(matrix + i) + j));
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int rows = 3;
+    int cols = 4;
+    int i, j;
+
+    // Allocate memory for row pointers
+    int **matrix = malloc(rows * sizeof(int *));
+
+    if (matrix == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    // Allocate memory for each row
+    for (i = 0; i < rows; i++) {
+        matrix[i] = malloc(cols * sizeof(int));
+
+        if (matrix[i] == NULL) {
+            printf("Memory allocation failed.\n");
+
+            // Free previously allocated rows
+            for (j = 0; j < i; j++) {
+                free(matrix[j]);
+            }
+
+            free(matrix);
+            return 1;
+        }
+    }
+
+    // Initialize the matrix
+    int value = 1;
+
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            *(*(matrix + i) + j) = value++;
+        }
+    }
+
+    // Print the matrix
+    printf("Matrix:\n");
+    printMatrix(matrix, rows, cols);
+
+    // Free each row
+    for (i = 0; i < rows; i++) {
+        free(matrix[i]);
+    }
+
+    // Free the array of row pointers
+    free(matrix);
+
+    return 0;
+}

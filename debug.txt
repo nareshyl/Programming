@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void printArray(int *arr, int size) {
+    if (arr == NULL) {
+        printf("Error: NULL pointer.\n");
+        return;
+    }
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", *(arr + i));
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int size = 5;
+
+    // Dynamic memory allocation
+    int *a = malloc(size * sizeof(int));
+
+    // Runtime validation
+    if (a == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    // Initialize array
+    for (int i = 0; i < size; i++) {
+        *(a + i) = i + 1;
+    }
+
+    // Print array
+    printArray(a, size);
+
+    // Release memory
+    free(a);
+    a = NULL;
+
+    return 0;
+}

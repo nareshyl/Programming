@@ -1,0 +1,282 @@
+// 1. Multiple operations 
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for Dynamic Array
+typedef struct {
+    int *array;
+    int size;
+    int capacity;
+} DynamicArray;
+
+
+// Initialize the dynamic array
+void initialize(DynamicArray *da, int capacity) {
+    da->array = (int *)malloc(capacity * sizeof(int));
+
+    if (da->array == NULL) {
+        printf("Error: Memory allocation failed!\n");
+        da->size = 0;
+        da->capacity = 0;
+        return;
+    }
+
+    da->size = 0;
+    da->capacity = capacity;
+
+    printf("Dynamic array initialized successfully.\n");
+}
+
+
+// Add an element
+void addElement(DynamicArray *da, int value) {
+
+    // If array is full, increase capacity
+    if (da->size == da->capacity) {
+
+        int newCapacity = da->capacity * 2;
+
+        int *temp = (int *)realloc(
+            da->array,
+            newCapacity * sizeof(int)
+        );
+
+        if (temp == NULL) {
+            printf("Error: Unable to increase memory.\n");
+            return;
+        }
+
+        da->array = temp;
+        da->capacity = newCapacity;
+
+        printf("Capacity increased to %d.\n", da->capacity);
+    }
+
+    // Add the element
+    *(da->array + da->size) = value;
+    da->size++;
+
+    printf("%d added successfully.\n", value);
+}
+
+
+// Remove an element by position
+void removeElement(DynamicArray *da, int position) {
+
+    if (da->size == 0) {
+        printf("Error: Array is empty. Nothing to remove.\n");
+        return;
+    }
+
+    if (position < 0 || position >= da->size) {
+        printf("Error: Invalid position.\n");
+        return;
+    }
+
+    // Shift elements to the left
+    for (int i = position; i < da->size - 1; i++) {
+        *(da->array + i) = *(da->array + i + 1);
+    }
+
+    da->size--;
+
+    printf("Element removed successfully.\n");
+}
+
+
+// Reallocate the array
+void reallocateArray(DynamicArray *da, int newCapacity) {
+
+    if (newCapacity <= 0) {
+        printf("Error: Capacity must be greater than 0.\n");
+        return;
+    }
+
+    // New capacity cannot be smaller than current number of elements
+    if (newCapacity < da->size) {
+        printf("New capacity cannot be less than current size (%d).\n",
+               da->size);
+        return;
+    }
+
+    int *temp = (int *)realloc(
+        da->array,
+        newCapacity * sizeof(int)
+    );
+
+    if (temp == NULL) {
+        printf("Error: Memory reallocation failed.\n");
+        return;
+    }
+
+    da->array = temp;
+    da->capacity = newCapacity;
+
+    printf("Array reallocated successfully.\n");
+    printf("New capacity: %d\n", da->capacity);
+}
+
+
+// Display elements
+void display(DynamicArray *da) {
+
+    if (da->size == 0) {
+        printf("Array is empty.\n");
+        return;
+    }
+
+    printf("\nCurrent elements:\n");
+
+    for (int i = 0; i < da->size; i++) {
+        printf("%d ", *(da->array + i));
+    }
+
+    printf("\n");
+    printf("Size     : %d\n", da->size);
+    printf("Capacity : %d\n", da->capacity);
+}
+
+
+// Search for an element
+void searchElement(DynamicArray *da, int value) {
+
+    if (da->size == 0) {
+        printf("Array is empty.\n");
+        return;
+    }
+
+    for (int i = 0; i < da->size; i++) {
+
+        if (*(da->array + i) == value) {
+            printf("%d found at position %d.\n", value, i);
+            return;
+        }
+    }
+
+    printf("%d not found in the array.\n", value);
+}
+
+
+// Free allocated memory
+void freeArray(DynamicArray *da) {
+
+    free(da->array);
+
+    da->array = NULL;
+    da->size = 0;
+    da->capacity = 0;
+
+    printf("Memory freed successfully.\n");
+}
+
+
+// Main function
+int main() {
+
+    DynamicArray da;
+
+    int initialCapacity;
+    int choice;
+    int value;
+    int position;
+    int newCapacity;
+
+    printf("========================================\n");
+    printf("     DYNAMIC ARRAY MANAGEMENT SYSTEM\n");
+    printf("========================================\n");
+
+    printf("Enter initial capacity: ");
+    scanf("%d", &initialCapacity);
+
+    if (initialCapacity <= 0) {
+        printf("Invalid capacity.\n");
+        return 1;
+    }
+
+    initialize(&da, initialCapacity);
+
+    if (da.array == NULL) {
+        return 1;
+    }
+
+
+    do {
+
+        printf("\n========================================\n");
+        printf("              MENU\n");
+        printf("========================================\n");
+        printf("1. Add Element\n");
+        printf("2. Remove Element\n");
+        printf("3. Display Elements\n");
+        printf("4. Reallocate Array\n");
+        printf("5. Search Element\n");
+        printf("6. Free Memory\n");
+        printf("7. Exit\n");
+        printf("========================================\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+
+        switch (choice) {
+
+            case 1:
+                printf("Enter value to add: ");
+                scanf("%d", &value);
+
+                addElement(&da, value);
+                break;
+
+
+            case 2:
+                printf("Enter position to remove: ");
+                scanf("%d", &position);
+
+                removeElement(&da, position);
+                break;
+
+
+            case 3:
+                display(&da);
+                break;
+
+
+            case 4:
+                printf("Enter new capacity: ");
+                scanf("%d", &newCapacity);
+
+                reallocateArray(&da, newCapacity);
+                break;
+
+
+            case 5:
+                printf("Enter value to search: ");
+                scanf("%d", &value);
+
+                searchElement(&da, value);
+                break;
+
+
+            case 6:
+                freeArray(&da);
+                break;
+
+
+            case 7:
+                if (da.array != NULL) {
+                    freeArray(&da);
+                }
+
+                printf("Program terminated successfully.\n");
+                break;
+
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+
+    } while (choice != 7);
+
+
+    return 0;
+}
