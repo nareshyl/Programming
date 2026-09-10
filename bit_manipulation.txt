@@ -1,0 +1,93 @@
+//Efficient Data Processing using Command Line Arguments & Bit Manipulation.
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Convert command-line argument to integer */
+int parseArgument(char *arg)
+{
+    return atoi(arg);
+}
+
+/* Set a bit at the given position */
+int setBit(int num, int position)
+{
+    return num | (1 << position);
+}
+
+/* Clear a bit at the given position */
+int clearBit(int num, int position)
+{
+    return num & ~(1 << position);
+}
+
+/* Toggle a bit at the given position */
+int toggleBit(int num, int position)
+{
+    return num ^ (1 << position);
+}
+
+/* Check whether a bit is set */
+int checkBit(int num, int position)
+{
+    return (num & (1 << position)) != 0;
+}
+
+/* Count number of set bits */
+int countSetBits(unsigned int num)
+{
+    int count = 0;
+
+    while (num != 0)
+    {
+        num = num & (num - 1);
+        count++;
+    }
+
+    return count;
+}
+
+int main(int argc, char *argv[])
+{
+    int num, position;
+
+    /* Check command-line arguments */
+    if (argc != 3)
+    {
+        printf("Usage: %s <integer> <bit_position>\n", argv[0]);
+        return 1;
+    }
+
+    /* Parse command-line arguments */
+    num = parseArgument(argv[1]);
+    position = parseArgument(argv[2]);
+
+    if (position < 0 || position >= sizeof(int) * 8)
+    {
+        printf("Invalid bit position.\n");
+        return 1;
+    }
+
+    printf("Original number : %d\n", num);
+    printf("Bit position    : %d\n", position);
+
+    /* Check bit */
+    printf("Bit status      : %d\n", checkBit(num, position));
+
+    /* Set bit */
+    printf("After SET       : %d\n",
+           setBit(num, position));
+
+    /* Clear bit */
+    printf("After CLEAR     : %d\n",
+           clearBit(num, position));
+
+    /* Toggle bit */
+    printf("After TOGGLE    : %d\n",
+           toggleBit(num, position));
+
+    /* Count set bits */
+    printf("Set bit count   : %d\n",
+           countSetBits((unsigned int)num));
+
+    return 0;
+}

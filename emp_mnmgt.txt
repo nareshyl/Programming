@@ -1,0 +1,270 @@
+//Employee Record Management System#include <stdio.h>
+#include <string.h>
+
+#define FILE_NAME "employees.dat"
+
+/* Union to store different types of salary */
+union Salary {
+    int monthly_salary;
+    float hourly_salary;
+};
+
+/* Structure to store employee information */
+struct Employee {
+    int employee_id;
+    char name[50];
+    char department[30];
+
+    int salary_type;
+    union Salary salary;
+};
+
+/* Function to add employee */
+void addEmployee() {
+    FILE *fp;
+    struct Employee emp;
+
+    fp = fopen(FILE_NAME, "ab");
+
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    printf("\nEnter Employee ID: ");
+    scanf("%d", &emp.employee_id);
+
+    printf("Enter Employee Name: ");
+    scanf(" %49[^\n]", emp.name);
+
+    printf("Enter Department: ");
+    scanf(" %29[^\n]", emp.department);
+
+    printf("\nSelect Salary Type:\n");
+    printf("1. Monthly Salary\n");
+    printf("2. Hourly Salary\n");
+    printf("Enter choice: ");
+    scanf("%d", &emp.salary_type);
+
+    if (emp.salary_type == 1) {
+        printf("Enter Monthly Salary: ");
+        scanf("%d", &emp.salary.monthly_salary);
+    }
+    else if (emp.salary_type == 2) {
+        printf("Enter Hourly Salary: ");
+        scanf("%f", &emp.salary.hourly_salary);
+    }
+    else {
+        printf("Invalid salary type!\n");
+        fclose(fp);
+        return;
+    }
+
+    fwrite(&emp, sizeof(struct Employee), 1, fp);
+
+    fclose(fp);
+
+    printf("\nEmployee record saved successfully!\n");
+}
+
+/* Function to display employees */
+void displayEmployees() {
+    FILE *fp;
+    struct Employee emp;
+
+    fp = fopen(FILE_NAME, "rb");
+
+    if (fp == NULL) {
+        printf("\nNo employee records found.\n");
+        return;
+    }
+
+    printf("\n==============================================\n");
+    printf("          EMPLOYEE RECORDS\n");
+    printf("==============================================\n");
+
+    while (fread(&emp, sizeof(struct Employee), 1, fp) == 1) {
+
+        printf("\nEmployee ID : %d", emp.employee_id);
+        printf("\nName        : %s", emp.name);
+        printf("\nDepartment  : %s", emp.department);
+
+        if (emp.salary_type == 1) {
+            printf("\nSalary Type : Monthly");
+            printf("\nSalary      : Rs. %d", emp.salary.monthly_salary);
+        }
+        else if (emp.salary_type == 2) {
+            printf("\nSalary Type : Hourly");
+            printf("\nSalary      : Rs. %.2f/hour",
+                   emp.salary.hourly_salary);
+        }
+
+        printf("\n----------------------------------------------\n");
+    }
+
+    fclose(fp);
+}
+
+/* Function to find an employee */
+void searchEmployee() {
+    FILE *fp;
+    struct Employee emp;
+    int id;
+    int found = 0;
+
+    fp = fopen(FILE_NAME, "rb");
+
+    if (fp == NULL) {
+        printf("\nNo employee records found.\n");
+        return;
+    }
+
+    printf("\nEnter Employee ID to search: ");
+    scanf("%d", &id);
+
+    while (fread(&emp, sizeof(struct Employee), 1, fp) == 1) {
+
+        if (emp.employee_id == id) {
+            found = 1;
+
+            printf("\nEmployee ID : %d", emp.employee_id);
+            printf("\nName        : %s", emp.name);
+            printf("\nDepartment  : %s", emp.department);
+
+            if (emp.salary_type == 1) {
+                printf("\nSalary Type : Monthly");
+                printf("\nSalary      : Rs. %d",
+                       emp.salary.monthly_salary);
+            }
+            else {
+                printf("\nSalary Type : Hourly");
+                printf("\nSalary      : Rs. %.2f/hour",
+                       emp.salary.hourly_salary);
+            }
+
+            printf("\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nEmployee ID not found!\n");
+    }
+
+    fclose(fp);
+}
+
+/* Function to modify employee */
+void modifyEmployee() {
+    FILE *fp;
+    struct Employee emp;
+    int id;
+    int found = 0;
+
+    fp = fopen(FILE_NAME, "rb+");
+
+    if (fp == NULL) {
+        printf("\nNo employee records found.\n");
+        return;
+    }
+
+    printf("\nEnter Employee ID to modify: ");
+    scanf("%d", &id);
+
+    while (fread(&emp, sizeof(struct Employee), 1, fp) == 1) {
+
+        if (emp.employee_id == id) {
+            found = 1;
+
+            printf("\nEnter New Name: ");
+            scanf(" %49[^\n]", emp.name);
+
+            printf("Enter New Department: ");
+            scanf(" %29[^\n]", emp.department);
+
+            printf("\nSelect New Salary Type:\n");
+            printf("1. Monthly Salary\n");
+            printf("2. Hourly Salary\n");
+            printf("Enter choice: ");
+            scanf("%d", &emp.salary_type);
+
+            if (emp.salary_type == 1) {
+                printf("Enter Monthly Salary: ");
+                scanf("%d", &emp.salary.monthly_salary);
+            }
+            else if (emp.salary_type == 2) {
+                printf("Enter Hourly Salary: ");
+                scanf("%f", &emp.salary.hourly_salary);
+            }
+            else {
+                printf("Invalid salary type!\n");
+                fclose(fp);
+                return;
+            }
+
+            /* Move to beginning of current record */
+            fseek(fp, -sizeof(struct Employee), SEEK_CUR);
+
+            /* Save updated record */
+            fwrite(&emp, sizeof(struct Employee), 1, fp);
+
+            printf("\nEmployee record updated successfully!\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nEmployee ID not found!\n");
+    }
+
+    fclose(fp);
+}
+
+/* Main function */
+int main() {
+    int choice;
+
+    do {
+        printf("\n==============================================\n");
+        printf("       EMPLOYEE RECORD MANAGEMENT SYSTEM\n");
+        printf("==============================================\n");
+        printf("1. Add Employee\n");
+        printf("2. Display Employees\n");
+        printf("3. Search Employee\n");
+        printf("4. Modify Employee\n");
+        printf("5. Exit\n");
+        printf("==============================================\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                addEmployee();
+                break;
+
+            case 2:
+                displayEmployees();
+                break;
+
+            case 3:
+                searchEmployee();
+                break;
+
+            case 4:
+                modifyEmployee();
+                break;
+
+            case 5:
+                printf("\nThank you! Program terminated.\n");
+                break;
+
+            default:
+                printf("\nInvalid choice! Try again.\n");
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}

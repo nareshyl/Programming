@@ -1,0 +1,67 @@
+// 1. struct & union
+#include <stdio.h>
+#include <string.h>
+
+// Structure
+struct Data {
+    int i;
+    float f;
+    char str[20];
+};
+
+// Union
+union DataUnion {
+    int i;
+    float f;
+    char str[20];
+};
+
+int main()
+{
+    struct Data s;
+    union DataUnion u;
+
+    // Assign values to structure
+    s.i = 10;
+    s.f = 3.14;
+    strcpy(s.str, "Hello");
+
+    // Print structure values
+    printf("========== STRUCTURE ==========\n");
+    printf("Integer : %d\n", s.i);
+    printf("Float   : %.2f\n", s.f);
+    printf("String  : %s\n", s.str);
+
+    // Show structure size
+    printf("Size of structure = %zu bytes\n", sizeof(s));
+
+
+    // Assign and print union integer
+    printf("\n========== UNION ==========\n");
+
+    u.i = 10;
+    printf("After assigning int:\n");
+    printf("Integer : %d\n", u.i);
+
+    // Assign float
+    u.f = 3.14;
+    printf("\nAfter assigning float:\n");
+    printf("Float   : %.2f\n", u.f);
+
+    // Assign string
+    strcpy(u.str, "Hello");
+    printf("\nAfter assigning string:\n");
+    printf("String  : %s\n", u.str);
+
+    // Show union size
+    printf("\nSize of union = %zu bytes\n", sizeof(u));
+
+
+    // Compare sizes
+    printf("\n========== COMPARISON ==========\n");
+
+    printf("Structure size = %zu bytes\n", sizeof(s));
+    printf("Union size     = %zu bytes\n", sizeof(u));
+
+    return 0;
+}

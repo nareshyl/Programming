@@ -1,0 +1,62 @@
+//2.Pointer to Structure and Function Modification
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll;
+    float marks;
+};
+
+// Function receives pointer to structure
+void updateStudent(struct Student *student)
+{
+    printf("\nEnter updated student details\n");
+
+    printf("Name  : ");
+    scanf(" %49[^\n]", student->name);
+
+    printf("Roll  : ");
+    scanf("%d", &student->roll);
+
+    printf("Marks : ");
+    scanf("%f", &student->marks);
+}
+
+// Function to display student details
+void displayStudent(struct Student *student)
+{
+    printf("\n===== STUDENT DETAILS =====\n");
+    printf("Name  : %s\n", student->name);
+    printf("Roll  : %d\n", student->roll);
+    printf("Marks : %.2f\n", student->marks);
+}
+
+int main()
+{
+    struct Student student;
+
+    // Initial values
+    printf("Enter initial student details\n");
+
+    printf("Name  : ");
+    scanf(" %49[^\n]", student.name);
+
+    printf("Roll  : ");
+    scanf("%d", &student.roll);
+
+    printf("Marks : ");
+    scanf("%f", &student.marks);
+
+    // Display before modification
+    printf("\n--- Before Function Call ---");
+    displayStudent(&student);
+
+    // Pass address of structure
+    updateStudent(&student);
+
+    // Display after modification
+    printf("\n--- After Function Call ---");
+    displayStudent(&student);
+
+    return 0;
+}

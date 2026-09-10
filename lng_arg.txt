@@ -1,0 +1,29 @@
+// 1. Finding the longest Argument
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char *argv[])
+{
+    int i;
+    int maxLength = 0;
+    char *longest = NULL;
+
+    if (argc == 1)
+    {
+        printf("No command-line arguments provided.\n");
+        return 0;
+    }
+
+    for (i = 1; i < argc; i++)
+    {
+        if ((int)strlen(argv[i]) > maxLength)
+        {
+            maxLength = strlen(argv[i]);
+            longest = argv[i];
+        }
+    }
+
+    printf("Longest argument: %s\n", longest);
+
+    return 0;
+}

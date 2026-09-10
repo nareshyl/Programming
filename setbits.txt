@@ -1,0 +1,77 @@
+// setbits
+#include <stdio.h>
+#include <stdlib.h>
+
+int countSetBits(unsigned int n)
+{
+    int count = 0;
+
+    while (n != 0)
+    {
+        n = n & (n - 1);   // Removes the rightmost set bit
+        count++;
+    }
+
+    return count;
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc < 2)
+    {
+        printf("Usage: %s <integer1> <integer2> ...\n", argv[0]);
+        return 1;
+    }
+
+    int n = argc - 1;
+
+    unsigned int commonBits;
+    unsigned int xorResult = 0;
+
+    // Read the first integer
+    commonBits = (unsigned int)atoi(argv[1]);
+
+    printf("Set bits in each integer:\n");
+
+    for (int i = 1; i <= n; i++)
+    {
+        unsigned int num = (unsigned int)atoi(argv[i]);
+
+        // Count set bits
+        printf("%d -> %d set bits\n",
+               atoi(argv[i]),
+               countSetBits(num));
+
+        // XOR all numbers
+        xorResult = xorResult ^ num;
+
+        // AND all numbers to find common set bits
+        if (i > 1)
+        {
+            commonBits = commonBits & num;
+        }
+    }
+
+    printf("\nCommon set bit positions: ");
+
+    int found = 0;
+
+    for (int i = 0; i < sizeof(unsigned int) * 8; i++)
+    {
+        if (commonBits & (1U << i))
+        {
+            printf("%d ", i);
+            found = 1;
+        }
+    }
+
+    if (!found)
+    {
+        printf("None");
+    }
+
+    printf("\n");
+    printf("XOR of all integers: %u\n", xorResult);
+
+    return 0;
+}

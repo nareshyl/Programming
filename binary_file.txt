@@ -1,0 +1,78 @@
+//1.Contact Management Using Binary File
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Contact {
+    char name[30];
+    char phone[15];
+    char email[50];
+};
+
+int main()
+{
+    struct Contact contacts[3];
+    struct Contact temp;
+    FILE *fp;
+
+    // Input contact details
+    printf("===== CONTACT MANAGEMENT SYSTEM =====\n");
+
+    for (int i = 0; i < 3; i++)
+    {
+        printf("\nEnter details for Contact %d\n", i + 1);
+
+        printf("Name  : ");
+        scanf(" %29[^\n]", contacts[i].name);
+
+        printf("Phone : ");
+        scanf(" %14s", contacts[i].phone);
+
+        printf("Email : ");
+        scanf(" %49s", contacts[i].email);
+    }
+
+    // Open binary file for writing
+    fp = fopen("contacts.dat", "wb");
+
+    if (fp == NULL)
+    {
+        printf("Error: Cannot open file for writing.\n");
+        return 1;
+    }
+
+    // Write all contacts to binary file
+    for (int i = 0; i < 3; i++)
+    {
+        fwrite(&contacts[i], sizeof(struct Contact), 1, fp);
+    }
+
+    fclose(fp);
+
+    printf("\nContacts saved successfully to contacts.dat\n");
+
+
+    // Open binary file for reading
+    fp = fopen("contacts.dat", "rb");
+
+    if (fp == NULL)
+    {
+        printf("Error: Cannot open file for reading.\n");
+        return 1;
+    }
+
+    printf("\n===== CONTACTS FROM BINARY FILE =====\n");
+
+    // Read contacts using fread()
+    while (fread(&temp, sizeof(struct Contact), 1, fp) == 1)
+    {
+        printf("\nName  : %s\n", temp.name);
+        printf("Phone : %s\n", temp.phone);
+        printf("Email : %s\n", temp.email);
+    }
+
+    fclose(fp);
+
+    printf("\nFile reading completed successfully.\n");
+
+    return 0;
+}

@@ -1,0 +1,62 @@
+//2.Count a Search word in a file 
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(int argc, char *argv[])
+{
+    FILE *fp;
+    char line[1000];
+    char search[100];
+    int count = 0;
+    int i, j, match;
+    int len;
+
+    if (argc != 3)
+    {
+        printf("Usage: %s <filename> <search_word>\n", argv[0]);
+        return 1;
+    }
+
+    fp = fopen(argv[1], "r");
+
+    if (fp == NULL)
+    {
+        printf("Error: Cannot open file %s\n", argv[1]);
+        return 1;
+    }
+
+    strcpy(search, argv[2]);
+
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
+        len = strlen(line);
+
+        for (i = 0; i <= len - (int)strlen(search); i++)
+        {
+            match = 1;
+
+            for (j = 0; search[j] != '\0'; j++)
+            {
+                if (tolower((unsigned char)line[i + j]) !=
+                    tolower((unsigned char)search[j]))
+                {
+                    match = 0;
+                    break;
+                }
+            }
+
+            if (match)
+            {
+                count++;
+            }
+        }
+    }
+
+    fclose(fp);
+
+    printf("The word \"%s\" appears %d times.\n",
+           argv[2], count);
+
+    return 0;
+}

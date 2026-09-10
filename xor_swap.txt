@@ -1,0 +1,42 @@
+// XOR Swap in C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+    // Check whether exactly two integer arguments are provided
+    if (argc != 3)
+    {
+        printf("Usage: %s <integer1> <integer2>\n", argv[0]);
+        return 1;
+    }
+
+    // Convert command-line arguments from string to integer
+    int a = atoi(argv[1]);
+    int b = atoi(argv[2]);
+
+    printf("Before swapping: a = %d, b = %d\n", a, b);
+
+    /*
+       XOR Swap Algorithm
+
+       Step 1: a = a ^ b
+       Step 2: b = a ^ b
+       Step 3: a = a ^ b
+
+       XOR properties:
+       x ^ x = 0
+       x ^ 0 = x
+
+       Therefore, the original values are exchanged
+       without using a temporary variable.
+    */
+
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+
+    printf("After swapping:  a = %d, b = %d\n", a, b);
+
+    return 0;
+}

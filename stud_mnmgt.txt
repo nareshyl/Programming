@@ -1,0 +1,205 @@
+//Student Data Management System
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_COURSES 5
+#define COURSE_LEN 30
+
+/* Union to store course information */
+union CourseData {
+    char courses[MAX_COURSES][COURSE_LEN];
+};
+
+/* Structure to store student information */
+struct Student {
+    int student_id;
+    char name[50];
+    float grade;
+
+    int course_count;
+    union CourseData course;
+};
+
+/* Function to add a new student */
+void addStudent() {
+    FILE *fp;
+    struct Student s;
+    int i;
+
+    fp = fopen("students.dat", "ab");
+
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    printf("\nEnter Student ID: ");
+    scanf("%d", &s.student_id);
+
+    printf("Enter Student Name: ");
+    scanf(" %49[^\n]", s.name);
+
+    printf("Enter Grade: ");
+    scanf("%f", &s.grade);
+
+    printf("Enter number of courses (1-%d): ", MAX_COURSES);
+    scanf("%d", &s.course_count);
+
+    if (s.course_count < 1 || s.course_count > MAX_COURSES) {
+        printf("Invalid number of courses!\n");
+        fclose(fp);
+        return;
+    }
+
+    for (i = 0; i < s.course_count; i++) {
+        printf("Enter Course %d: ", i + 1);
+        scanf(" %29[^\n]", s.course.courses[i]);
+    }
+
+    fwrite(&s, sizeof(struct Student), 1, fp);
+
+    fclose(fp);
+
+    printf("\nStudent record added successfully!\n");
+}
+
+/* Function to display all students */
+void displayStudents() {
+    FILE *fp;
+    struct Student s;
+    int i;
+
+    fp = fopen("students.dat", "rb");
+
+    if (fp == NULL) {
+        printf("\nNo student records found.\n");
+        return;
+    }
+
+    printf("\n========================================\n");
+    printf("          STUDENT RECORDS\n");
+    printf("========================================\n");
+
+    while (fread(&s, sizeof(struct Student), 1, fp) == 1) {
+
+        printf("\nStudent ID : %d", s.student_id);
+        printf("\nName       : %s", s.name);
+        printf("\nGrade      : %.2f", s.grade);
+        printf("\nCourses    : %d\n", s.course_count);
+
+        for (i = 0; i < s.course_count; i++) {
+            printf("  %d. %s\n", i + 1, s.course.courses[i]);
+        }
+
+        printf("----------------------------------------\n");
+    }
+
+    fclose(fp);
+}
+
+/* Function to modify a student record */
+void modifyStudent() {
+    FILE *fp;
+    struct Student s;
+    int id;
+    int found = 0;
+    int i;
+
+    fp = fopen("students.dat", "rb+");
+
+    if (fp == NULL) {
+        printf("\nNo student records found.\n");
+        return;
+    }
+
+    printf("\nEnter Student ID to modify: ");
+    scanf("%d", &id);
+
+    while (fread(&s, sizeof(struct Student), 1, fp) == 1) {
+
+        if (s.student_id == id) {
+            found = 1;
+
+            printf("\nEnter New Name: ");
+            scanf(" %49[^\n]", s.name);
+
+            printf("Enter New Grade: ");
+            scanf("%f", &s.grade);
+
+            printf("Enter number of courses (1-%d): ", MAX_COURSES);
+            scanf("%d", &s.course_count);
+
+            if (s.course_count < 1 ||
+                s.course_count > MAX_COURSES) {
+
+                printf("Invalid number of courses!\n");
+                fclose(fp);
+                return;
+            }
+
+            for (i = 0; i < s.course_count; i++) {
+                printf("Enter Course %d: ", i + 1);
+                scanf(" %29[^\n]", s.course.courses[i]);
+            }
+
+            /* Move back to the beginning of current record */
+            fseek(fp, -sizeof(struct Student), SEEK_CUR);
+
+            /* Write updated record */
+            fwrite(&s, sizeof(struct Student), 1, fp);
+
+            printf("\nStudent record modified successfully!\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nStudent ID not found!\n");
+    }
+
+    fclose(fp);
+}
+
+/* Main function */
+int main() {
+    int choice;
+
+    do {
+        printf("\n========================================\n");
+        printf("       STUDENT DATA MANAGEMENT\n");
+        printf("========================================\n");
+        printf("1. Add Student\n");
+        printf("2. Display Students\n");
+        printf("3. Modify Student\n");
+        printf("4. Exit\n");
+        printf("========================================\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                addStudent();
+                break;
+
+            case 2:
+                displayStudents();
+                break;
+
+            case 3:
+                modifyStudent();
+                break;
+
+            case 4:
+                printf("\nProgram exited.\n");
+                break;
+
+            default:
+                printf("\nInvalid choice!\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
