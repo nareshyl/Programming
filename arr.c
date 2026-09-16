@@ -1,15 +1,31 @@
+// Write a C program that print the array , input the array and print the array after inputting the values, do sum & average of the array elements.
 #include <stdio.h>
 
 int main() {
-    // Declaration and initialization of an array
-    int numbers[5] = {10, 20, 30, 40, 50};
+   
+    int numbers[5];
+    int sum = 0;
+    float average;
     
-    // Accessing elements (O(1) time complexity)
-    printf("First element: %d\n", numbers[0]); // Outputs 10
-    printf("Third element: %d\n", numbers[2]); // Outputs 30
+    // Input values for the array
+    printf("Enter 5 numbers:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Number %d: ", i + 1);
+        scanf("%d", &numbers[i]);
+        sum += numbers[i];
+    }
+    average = (float)sum / 5;
     
-    // Modifying an element
-    numbers[1] = 25; 
+    // Print the array
+    printf("The array elements are:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\nSum: %d\n", sum);
+    printf("Average: %.2f\n", average);
     
     return 0;
 }
+    
+    
+    
