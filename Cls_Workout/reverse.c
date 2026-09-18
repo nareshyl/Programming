@@ -9,4 +9,6 @@ void main(){
         rev = rev*10 + rem;
         n = n/10;
     }
-    printf("Reverse of the number is: %d",rev);
+  
+    printf("Reverse of the number is: %d\n",rev);
+}
