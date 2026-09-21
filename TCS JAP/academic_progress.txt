@@ -1,0 +1,181 @@
+//2.Academic Progress Using Linked List
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node {
+    int studentID;
+    int courseID;
+    char grade[10];
+    char status[20];
+
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+// Add course completion
+void addProgress() {
+
+    struct Node *newNode;
+
+    newNode = malloc(sizeof(struct Node));
+
+    printf("\nEnter Student ID: ");
+    scanf("%d", &newNode->studentID);
+
+    printf("Enter Course ID: ");
+    scanf("%d", &newNode->courseID);
+
+    printf("Enter Grade: ");
+    scanf("%s", newNode->grade);
+
+    printf("Enter Completion Status: ");
+    scanf("%s", newNode->status);
+
+    newNode->next = head;
+    head = newNode;
+
+    printf("Academic progress added!\n");
+}
+
+// Display progress
+void displayProgress() {
+
+    struct Node *temp = head;
+
+    if (temp == NULL) {
+        printf("No academic records found.\n");
+        return;
+    }
+
+    printf("\n--- Academic Progress ---\n");
+
+    while (temp != NULL) {
+
+        printf("\nStudent ID: %d", temp->studentID);
+        printf("\nCourse ID: %d", temp->courseID);
+        printf("\nGrade: %s", temp->grade);
+        printf("\nStatus: %s\n", temp->status);
+
+        temp = temp->next;
+    }
+}
+
+// Update grade
+void updateGrade() {
+
+    int studentID;
+    int courseID;
+
+    printf("\nEnter Student ID: ");
+    scanf("%d", &studentID);
+
+    printf("Enter Course ID: ");
+    scanf("%d", &courseID);
+
+    struct Node *temp = head;
+
+    while (temp != NULL) {
+
+        if (temp->studentID == studentID &&
+            temp->courseID == courseID) {
+
+            printf("Enter new grade: ");
+            scanf("%s", temp->grade);
+
+            printf("Grade updated successfully!\n");
+
+            return;
+        }
+
+        temp = temp->next;
+    }
+
+    printf("Record not found!\n");
+}
+
+// Remove dropped course
+void removeCourse() {
+
+    int studentID;
+    int courseID;
+
+    printf("\nEnter Student ID: ");
+    scanf("%d", &studentID);
+
+    printf("Enter Course ID: ");
+    scanf("%d", &courseID);
+
+    struct Node *temp = head;
+    struct Node *prev = NULL;
+
+    while (temp != NULL) {
+
+        if (temp->studentID == studentID &&
+            temp->courseID == courseID) {
+
+            if (prev == NULL) {
+                head = temp->next;
+            }
+            else {
+                prev->next = temp->next;
+            }
+
+            free(temp);
+
+            printf("Course removed successfully!\n");
+
+            return;
+        }
+
+        prev = temp;
+        temp = temp->next;
+    }
+
+    printf("Record not found!\n");
+}
+
+int main() {
+
+    int choice;
+
+    while (1) {
+
+        printf("\n===== ACADEMIC PROGRESS =====\n");
+
+        printf("1. Add Course Completion\n");
+        printf("2. Display Progress\n");
+        printf("3. Update Grade\n");
+        printf("4. Remove Dropped Course\n");
+        printf("5. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                addProgress();
+                break;
+
+            case 2:
+                displayProgress();
+                break;
+
+            case 3:
+                updateGrade();
+                break;
+
+            case 4:
+                removeCourse();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}

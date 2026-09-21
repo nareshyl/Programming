@@ -1,0 +1,61 @@
+//2.Remove duplicates from an unsorted linked list
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head = NULL;
+    struct Node *temp;
+    
+    // Create nodes
+    int arr[] = {1, 2, 3, 2, 4, 3};
+
+    for (int i = 0; i < 6; i++) {
+        struct Node *newNode = malloc(sizeof(struct Node));
+
+        newNode->data = arr[i];
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Remove duplicates
+    struct Node *current = head;
+
+    while (current != NULL) {
+        struct Node *prev = current;
+        struct Node *temp = current->next;
+
+        while (temp != NULL) {
+
+            if (temp->data == current->data) {
+                prev->next = temp->next;
+                free(temp);
+                temp = prev->next;
+            } 
+            else {
+                prev = temp;
+                temp = temp->next;
+            }
+        }
+
+        current = current->next;
+    }
+
+    // Print list
+    temp = head;
+
+    while (temp != NULL) {
+        printf("%d", temp->data);
+
+        if (temp->next != NULL)
+            printf(" -> ");
+
+        temp = temp->next;
+    }
+
+    return 0;
+}

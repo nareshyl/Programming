@@ -1,0 +1,144 @@
+//1.Food Management
+#include <stdio.h>
+
+#define MAX 100
+
+struct Food {
+    int id;
+    char name[50];
+    float price;
+    int quantity;
+};
+
+struct Food food[MAX];
+int count = 0;
+
+// Add food item
+void addFood() {
+    if (count >= MAX) {
+        printf("Food list is full!\n");
+        return;
+    }
+
+    printf("\nEnter Item ID: ");
+    scanf("%d", &food[count].id);
+
+    printf("Enter Item Name: ");
+    scanf(" %[^\n]", food[count].name);
+
+    printf("Enter Price: ");
+    scanf("%f", &food[count].price);
+
+    printf("Enter Quantity: ");
+    scanf("%d", &food[count].quantity);
+
+    count++;
+
+    printf("Food item added successfully!\n");
+}
+
+// Search food item
+void searchFood() {
+    int id;
+
+    printf("\nEnter Item ID to search: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (food[i].id == id) {
+            printf("\nItem Found!\n");
+            printf("ID       : %d\n", food[i].id);
+            printf("Name     : %s\n", food[i].name);
+            printf("Price    : %.2f\n", food[i].price);
+            printf("Quantity : %d\n", food[i].quantity);
+            return;
+        }
+    }
+
+    printf("Item not found!\n");
+}
+
+// Update quantity
+void updateQuantity() {
+    int id;
+    int newQuantity;
+
+    printf("\nEnter Item ID: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (food[i].id == id) {
+
+            printf("Enter new quantity: ");
+            scanf("%d", &newQuantity);
+
+            food[i].quantity = newQuantity;
+
+            printf("Quantity updated successfully!\n");
+            return;
+        }
+    }
+
+    printf("Item not found!\n");
+}
+
+// Display all food items
+void displayFood() {
+
+    if (count == 0) {
+        printf("\nNo food items available.\n");
+        return;
+    }
+
+    printf("\n----- FOOD ITEMS -----\n");
+
+    for (int i = 0; i < count; i++) {
+        printf("\nItem ID   : %d", food[i].id);
+        printf("\nItem Name : %s", food[i].name);
+        printf("\nPrice     : %.2f", food[i].price);
+        printf("\nQuantity  : %d\n", food[i].quantity);
+    }
+}
+
+int main() {
+
+    int choice;
+
+    while (1) {
+
+        printf("\n===== FOOD MANAGEMENT =====\n");
+        printf("1. Add Food Item\n");
+        printf("2. Search Food Item\n");
+        printf("3. Update Quantity\n");
+        printf("4. Display All Food Items\n");
+        printf("5. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                addFood();
+                break;
+
+            case 2:
+                searchFood();
+                break;
+
+            case 3:
+                updateQuantity();
+                break;
+
+            case 4:
+                displayFood();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}

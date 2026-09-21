@@ -1,0 +1,154 @@
+//2.Customer Orders
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Order {
+    int orderID;
+    char customerName[50];
+    int itemID;
+    int quantity;
+    char orderDate[20];
+
+    struct Order *next;
+};
+
+struct Order *head = NULL;
+
+// Place an order
+void placeOrder() {
+
+    struct Order *newOrder;
+
+    newOrder = (struct Order *)malloc(sizeof(struct Order));
+
+    printf("\nEnter Order ID: ");
+    scanf("%d", &newOrder->orderID);
+
+    printf("Enter Customer Name: ");
+    scanf(" %[^\n]", newOrder->customerName);
+
+    printf("Enter Item ID: ");
+    scanf("%d", &newOrder->itemID);
+
+    printf("Enter Quantity: ");
+    scanf("%d", &newOrder->quantity);
+
+    printf("Enter Order Date: ");
+    scanf("%s", newOrder->orderDate);
+
+    newOrder->next = NULL;
+
+    // Add at end
+    if (head == NULL) {
+        head = newOrder;
+    }
+    else {
+        struct Order *temp = head;
+
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+
+        temp->next = newOrder;
+    }
+
+    printf("Order placed successfully!\n");
+}
+
+// Display all orders
+void displayOrders() {
+
+    struct Order *temp = head;
+
+    if (temp == NULL) {
+        printf("\nNo orders available.\n");
+        return;
+    }
+
+    printf("\n===== ALL ORDERS =====\n");
+
+    while (temp != NULL) {
+
+        printf("\nOrder ID      : %d", temp->orderID);
+        printf("\nCustomer Name : %s", temp->customerName);
+        printf("\nItem ID       : %d", temp->itemID);
+        printf("\nQuantity      : %d", temp->quantity);
+        printf("\nOrder Date    : %s\n", temp->orderDate);
+
+        temp = temp->next;
+    }
+}
+
+// Cancel an order
+void cancelOrder() {
+
+    int id;
+
+    printf("\nEnter Order ID to cancel: ");
+    scanf("%d", &id);
+
+    struct Order *temp = head;
+    struct Order *prev = NULL;
+
+    while (temp != NULL) {
+
+        if (temp->orderID == id) {
+
+            // If first node
+            if (prev == NULL) {
+                head = temp->next;
+            }
+            else {
+                prev->next = temp->next;
+            }
+
+            free(temp);
+
+            printf("Order cancelled successfully!\n");
+            return;
+        }
+
+        prev = temp;
+        temp = temp->next;
+    }
+
+    printf("Order not found!\n");
+}
+
+int main() {
+
+    int choice;
+
+    while (1) {
+
+        printf("\n===== ORDER MANAGEMENT =====\n");
+        printf("1. Place Order\n");
+        printf("2. Display All Orders\n");
+        printf("3. Cancel Order\n");
+        printf("4. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                placeOrder();
+                break;
+
+            case 2:
+                displayOrders();
+                break;
+
+            case 3:
+                cancelOrder();
+                break;
+
+            case 4:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}

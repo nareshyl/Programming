@@ -1,0 +1,178 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* ---------- DOUBLY LINKED LIST ---------- */
+
+struct DNode {
+    int data;
+    struct DNode *prev;
+    struct DNode *next;
+};
+
+void displayDoubly(struct DNode *head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+void insertBeginningDoubly(struct DNode **head, int value) {
+    struct DNode *newNode = malloc(sizeof(struct DNode));
+
+    newNode->data = value;
+    newNode->prev = NULL;
+    newNode->next = *head;
+
+    if (*head != NULL)
+        (*head)->prev = newNode;
+
+    *head = newNode;
+}
+
+void deleteDoubly(struct DNode **head, int value) {
+    struct DNode *temp = *head;
+
+    while (temp != NULL && temp->data != value)
+        temp = temp->next;
+
+    if (temp == NULL)
+        return;
+
+    if (temp->prev != NULL)
+        temp->prev->next = temp->next;
+    else
+        *head = temp->next;
+
+    if (temp->next != NULL)
+        temp->next->prev = temp->prev;
+
+    free(temp);
+}
+
+/* ---------- CIRCULAR LINKED LIST ---------- */
+
+struct CNode {
+    int data;
+    struct CNode *next;
+};
+
+void displayCircular(struct CNode *head) {
+    if (head == NULL)
+        return;
+
+    struct CNode *temp = head;
+
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+
+    printf("\n");
+}
+
+void insertBeginningCircular(struct CNode **head, int value) {
+    struct CNode *newNode = malloc(sizeof(struct CNode));
+
+    newNode->data = value;
+
+    if (*head == NULL) {
+        newNode->next = newNode;
+        *head = newNode;
+        return;
+    }
+
+    struct CNode *temp = *head;
+
+    while (temp->next != *head)
+        temp = temp->next;
+
+    newNode->next = *head;
+    temp->next = newNode;
+    *head = newNode;
+}
+
+void deleteCircular(struct CNode **head, int value) {
+    if (*head == NULL)
+        return;
+
+    struct CNode *current = *head;
+    struct CNode *previous = NULL;
+
+    do {
+        if (current->data == value)
+            break;
+
+        previous = current;
+        current = current->next;
+    } while (current != *head);
+
+    if (current->data != value)
+        return;
+
+    /* Only one node */
+    if (current == *head && current->next == *head) {
+        *head = NULL;
+        free(current);
+        return;
+    }
+
+    /* Delete head */
+    if (current == *head) {
+        struct CNode *last = *head;
+
+        while (last->next != *head)
+            last = last->next;
+
+        *head = current->next;
+        last->next = *head;
+    }
+    else {
+        previous->next = current->next;
+    }
+
+    free(current);
+}
+
+/* ---------- MAIN ---------- */
+
+int main() {
+
+    /* Doubly linked list */
+    struct DNode *dHead = NULL;
+
+    insertBeginningDoubly(&dHead, 35);
+    insertBeginningDoubly(&dHead, 25);
+    insertBeginningDoubly(&dHead, 15);
+    insertBeginningDoubly(&dHead, 5);
+
+    printf("Doubly List: ");
+    displayDoubly(dHead);
+
+    insertBeginningDoubly(&dHead, 20);
+    deleteDoubly(&dHead, 25);
+
+    printf("After operations: ");
+    displayDoubly(dHead);
+
+
+    /* Circular linked list */
+    struct CNode *cHead = NULL;
+
+    /* Create [5, 15, 25, 35] */
+    insertBeginningCircular(&cHead, 35);
+    insertBeginningCircular(&cHead, 25);
+    insertBeginningCircular(&cHead, 15);
+    insertBeginningCircular(&cHead, 5);
+
+    printf("\nCircular List: ");
+    displayCircular(cHead);
+
+    insertBeginningCircular(&cHead, 20);
+    deleteCircular(&cHead, 25);
+
+    printf("After operations: ");
+    displayCircular(cHead);
+
+    return 0;
+}

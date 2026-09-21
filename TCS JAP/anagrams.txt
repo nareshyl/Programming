@@ -1,0 +1,71 @@
+//2.Group Anagrams
+#include <stdio.h>
+#include <string.h>
+
+void countLetters(char str[], int count[]) {
+    for (int i = 0; i < 26; i++)
+        count[i] = 0;
+
+    for (int i = 0; str[i] != '\0'; i++)
+        count[str[i] - 'a']++;
+}
+
+int sameCount(int a[], int b[]) {
+    for (int i = 0; i < 26; i++) {
+        if (a[i] != b[i])
+            return 0;
+    }
+
+    return 1;
+}
+
+int main() {
+
+    char words[][20] = {
+        "eat",
+        "tea",
+        "tan",
+        "ate",
+        "nat",
+        "bat"
+    };
+
+    int n = 6;
+    int used[6] = {0};
+
+    for (int i = 0; i < n; i++) {
+
+        if (used[i])
+            continue;
+
+        int count1[26];
+
+        countLetters(words[i], count1);
+
+        printf("[");
+
+        for (int j = i; j < n; j++) {
+
+            if (used[j])
+                continue;
+
+            int count2[26];
+
+            countLetters(words[j], count2);
+
+            if (sameCount(count1, count2)) {
+
+                if (j != i)
+                    printf(", ");
+
+                printf("\"%s\"", words[j]);
+
+                used[j] = 1;
+            }
+        }
+
+        printf("]\n");
+    }
+
+    return 0;
+}

@@ -1,0 +1,155 @@
+//1.Course Registration
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 10
+
+struct Course {
+    int courseID;
+    char courseName[50];
+    char instructor[50];
+    int credits;
+    int maxEnrollment;
+    int enrolled;
+};
+
+struct Course courses[MAX];
+int count = 0;
+
+// Add new course
+void addCourse() {
+    if (count == MAX) {
+        printf("Course list is full!\n");
+        return;
+    }
+
+    printf("\nEnter Course ID: ");
+    scanf("%d", &courses[count].courseID);
+
+    printf("Enter Course Name: ");
+    scanf(" %[^\n]", courses[count].courseName);
+
+    printf("Enter Instructor: ");
+    scanf(" %[^\n]", courses[count].instructor);
+
+    printf("Enter Credits: ");
+    scanf("%d", &courses[count].credits);
+
+    printf("Enter Maximum Enrollment: ");
+    scanf("%d", &courses[count].maxEnrollment);
+
+    courses[count].enrolled = 0;
+
+    count++;
+
+    printf("Course added successfully!\n");
+}
+
+// Display courses
+void displayCourses() {
+    if (count == 0) {
+        printf("No courses available.\n");
+        return;
+    }
+
+    printf("\n--- Course List ---\n");
+
+    for (int i = 0; i < count; i++) {
+        printf("\nCourse ID: %d\n", courses[i].courseID);
+        printf("Course Name: %s\n", courses[i].courseName);
+        printf("Instructor: %s\n", courses[i].instructor);
+        printf("Credits: %d\n", courses[i].credits);
+        printf("Maximum Enrollment: %d\n", courses[i].maxEnrollment);
+        printf("Enrolled: %d\n", courses[i].enrolled);
+    }
+}
+
+// Update course
+void updateCourse() {
+    int id;
+    printf("\nEnter Course ID to update: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+
+        if (courses[i].courseID == id) {
+
+            printf("Enter new instructor: ");
+            scanf(" %[^\n]", courses[i].instructor);
+
+            printf("Enter new credits: ");
+            scanf("%d", &courses[i].credits);
+
+            printf("Course updated successfully!\n");
+            return;
+        }
+    }
+
+    printf("Course not found!\n");
+}
+
+// Check availability
+void checkAvailability() {
+    int id;
+
+    printf("\nEnter Course ID: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+
+        if (courses[i].courseID == id) {
+
+            int available =
+                courses[i].maxEnrollment - courses[i].enrolled;
+
+            printf("Available seats: %d\n", available);
+
+            return;
+        }
+    }
+
+    printf("Course not found!\n");
+}
+
+int main() {
+
+    int choice;
+
+    while (1) {
+
+        printf("\n===== COURSE MANAGEMENT =====\n");
+        printf("1. Add Course\n");
+        printf("2. Display Courses\n");
+        printf("3. Update Course\n");
+        printf("4. Check Availability\n");
+        printf("5. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                addCourse();
+                break;
+
+            case 2:
+                displayCourses();
+                break;
+
+            case 3:
+                updateCourse();
+                break;
+
+            case 4:
+                checkAvailability();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+}

@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+// Recursive function to find maximum
+int findMax(int arr[], int n)
+{
+    // Base case
+    if (n == 1)
+        return arr[0];
+
+    // Find maximum of remaining elements
+    int max = findMax(arr, n - 1);
+
+    if (arr[n - 1] > max)
+        return arr[n - 1];
+    else
+        return max;
+}
+
+// Iterative function to count vowels
+int countVowels(char str[])
+{
+    int count = 0;
+
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (str[i] == 'a' || str[i] == 'e' ||
+            str[i] == 'i' || str[i] == 'o' ||
+            str[i] == 'u' ||
+            str[i] == 'A' || str[i] == 'E' ||
+            str[i] == 'I' || str[i] == 'O' ||
+            str[i] == 'U')
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int main()
+{
+    int arr[] = {10, 25, 7, 42, 18};
+    int n = 5;
+
+    char str[] = "Data Structure";
+
+    printf("Maximum value = %d\n", findMax(arr, n));
+    printf("Number of vowels = %d\n", countVowels(str));
+
+    return 0;
+}
