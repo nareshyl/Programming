@@ -1,0 +1,78 @@
+//Exercise 2 — Queue with O(1) getMin()
+#include <stdio.h>
+
+#define MAX 100
+
+int queue[MAX];
+int minQueue[MAX];
+
+int front = 0, rear = -1;
+int minFront = 0, minRear = -1;
+
+void enqueue(int x)
+{
+    queue[++rear] = x;
+
+    while (minRear >= minFront &&
+           minQueue[minRear] > x)
+    {
+        minRear--;
+    }
+
+    minQueue[++minRear] = x;
+}
+
+int dequeue()
+{
+    int x = queue[front++];
+
+    if (x == minQueue[minFront])
+        minFront++;
+
+    return x;
+}
+
+int getMin()
+{
+    return minQueue[minFront];
+}
+
+void display()
+{
+    int i;
+
+    for (i = front; i <= rear; i++)
+        printf("%d ", queue[i]);
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, i, x;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &x);
+        enqueue(x);
+    }
+
+    printf("Queue: ");
+    display();
+
+    printf("Minimum: %d\n", getMin());
+
+    printf("Deleted: %d\n", dequeue());
+
+    printf("Queue after deletion: ");
+    display();
+
+    printf("Minimum: %d\n", getMin());
+
+    return 0;
+}

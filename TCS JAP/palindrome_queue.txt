@@ -1,0 +1,43 @@
+//2.2. Palindrome Check in a Queue
+#include <stdio.h>
+
+#define MAX 100
+
+int queue[MAX];
+int front = 0;
+int rear = -1;
+
+int isPalindrome(int n)
+{
+    int i;
+
+    for (i = 0; i < n / 2; i++)
+    {
+        if (queue[front + i] != queue[front + n - 1 - i])
+            return 0;
+    }
+
+    return 1;
+}
+
+int main()
+{
+    int n, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter queue elements:\n");
+
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &queue[++rear]);
+    }
+
+    if (isPalindrome(n))
+        printf("Palindrome\n");
+    else
+        printf("Not Palindrome\n");
+
+    return 0;
+}

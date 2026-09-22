@@ -1,0 +1,92 @@
+//Interleave Problem 
+#include <stdio.h>
+
+#define MAX 100
+
+int queue[MAX];
+int stack[MAX];
+
+int front = 0, rear = -1;
+int top = -1;
+
+void enqueue(int x)
+{
+    queue[++rear] = x;
+}
+
+int dequeue()
+{
+    return queue[front++];
+}
+
+void push(int x)
+{
+    stack[++top] = x;
+}
+
+int pop()
+{
+    return stack[top--];
+}
+
+int main()
+{
+    int n, i, x;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter queue elements:\n");
+
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &x);
+        enqueue(x);
+    }
+
+    int half = n / 2;
+
+    /* Step 1: Move first half to stack */
+    for (i = 0; i < half; i++)
+        push(dequeue());
+
+    /*
+       Step 2: Move the stack elements back to queue.
+       This reverses the first half.
+    */
+    while (top != -1)
+        enqueue(pop());
+
+    /*
+       Step 3: Move the second half to the back.
+       Now the reversed first half comes to the front.
+    */
+    for (i = 0; i < half; i++)
+        enqueue(dequeue());
+
+    /*
+       Step 4: Move the reversed first half
+       back into the stack.
+    */
+    for (i = 0; i < half; i++)
+        push(dequeue());
+
+    /*
+       Step 5: Interleave.
+    */
+    for (i = 0; i < half; i++)
+    {
+        /* First half element */
+        enqueue(pop());
+
+        /* Second half element */
+        enqueue(dequeue());
+    }
+
+    printf("Interleaved queue:\n");
+
+    for (i = front; i <= rear; i++)
+        printf("%d ", queue[i]);
+
+    return 0;
+}

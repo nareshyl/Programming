@@ -1,0 +1,82 @@
+//1. Stack Sorting Using Another Stack
+#include <stdio.h>
+
+#define MAX 100
+
+int A[MAX], B[MAX];
+int topA = -1, topB = -1;
+
+void pushA(int x)
+{
+    A[++topA] = x;
+}
+
+int popA()
+{
+    return A[topA--];
+}
+
+void pushB(int x)
+{
+    B[++topB] = x;
+}
+
+int popB()
+{
+    return B[topB--];
+}
+
+void sortStack()
+{
+    int temp;
+
+    while (topA != -1)
+    {
+        temp = popA();
+
+        while (topB != -1 && B[topB] < temp)
+        {
+            pushA(popB());
+        }
+
+        pushB(temp);
+    }
+
+    while (topB != -1)
+    {
+        pushA(popB());
+    }
+}
+
+void display()
+{
+    int i;
+
+    for (i = topA; i >= 0; i--)
+        printf("%d ", A[i]);
+
+    printf("\n");
+}
+
+int main()
+{
+    int n, i, x;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &x);
+        pushA(x);
+    }
+
+    sortStack();
+
+    printf("Sorted stack: ");
+    display();
+
+    return 0;
+}
