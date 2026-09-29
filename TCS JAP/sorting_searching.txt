@@ -1,0 +1,186 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+#define LEN 100
+
+// Function to display strings
+void display(char arr[][LEN], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%s\n", arr[i]);
+    }
+}
+
+// ---------------- SELECTION SORT ----------------
+void selectionSort(char arr[][LEN], int n) {
+    int i, j, minIndex;
+    char temp[LEN];
+
+    for (i = 0; i < n - 1; i++) {
+        minIndex = i;
+
+        for (j = i + 1; j < n; j++) {
+            if (strcmp(arr[j], arr[minIndex]) < 0) {
+                minIndex = j;
+            }
+        }
+
+        strcpy(temp, arr[i]);
+        strcpy(arr[i], arr[minIndex]);
+        strcpy(arr[minIndex], temp);
+    }
+}
+
+// ---------------- MERGE FUNCTION ----------------
+void merge(char arr[][LEN], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    char L[n1][LEN];
+    char R[n2][LEN];
+
+    int i, j, k;
+
+    // Copy left part
+    for (i = 0; i < n1; i++) {
+        strcpy(L[i], arr[left + i]);
+    }
+
+    // Copy right part
+    for (j = 0; j < n2; j++) {
+        strcpy(R[j], arr[mid + 1 + j]);
+    }
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    // Merge
+    while (i < n1 && j < n2) {
+        if (strcmp(L[i], R[j]) <= 0) {
+            strcpy(arr[k], L[i]);
+            i++;
+        } else {
+            strcpy(arr[k], R[j]);
+            j++;
+        }
+        k++;
+    }
+
+    // Copy remaining left elements
+    while (i < n1) {
+        strcpy(arr[k], L[i]);
+        i++;
+        k++;
+    }
+
+    // Copy remaining right elements
+    while (j < n2) {
+        strcpy(arr[k], R[j]);
+        j++;
+        k++;
+    }
+}
+
+// ---------------- MERGE SORT ----------------
+void mergeSort(char arr[][LEN], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+}
+
+// ---------------- LINEAR SEARCH ----------------
+int linearSearch(char arr[][LEN], int n, char target[]) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(arr[i], target) == 0) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+// ---------------- BINARY SEARCH ----------------
+int binarySearch(char arr[][LEN], int n, char target[]) {
+    int low = 0;
+    int high = n - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        int result = strcmp(arr[mid], target);
+
+        if (result == 0) {
+            return mid;
+        } else if (result < 0) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+// ---------------- MAIN FUNCTION ----------------
+int main() {
+    int n;
+    char arr[MAX][LEN];
+    char target[LEN];
+
+    printf("Enter number of strings: ");
+    scanf("%d", &n);
+
+    printf("\nEnter %d strings:\n", n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%99s", arr[i]);
+    }
+
+    // Original list
+    printf("\nOriginal List:\n");
+    display(arr, n);
+
+    // Selection Sort
+    selectionSort(arr, n);
+
+    printf("\nAfter Selection Sort:\n");
+    display(arr, n);
+
+    // Merge Sort
+    mergeSort(arr, 0, n - 1);
+
+    printf("\nAfter Merge Sort:\n");
+    display(arr, n);
+
+    // Search string
+    printf("\nEnter string to search: ");
+    scanf("%99s", target);
+
+    // Linear Search
+    int linearResult = linearSearch(arr, n, target);
+
+    if (linearResult != -1) {
+        printf("\nLinear Search: \"%s\" found at index %d\n",
+               target, linearResult);
+    } else {
+        printf("\nLinear Search: \"%s\" not found\n", target);
+    }
+
+    // Binary Search
+    int binaryResult = binarySearch(arr, n, target);
+
+    if (binaryResult != -1) {
+        printf("Binary Search: \"%s\" found at index %d\n",
+               target, binaryResult);
+    } else {
+        printf("Binary Search: \"%s\" not found\n", target);
+    }
+
+    return 0;
+}

@@ -1,0 +1,191 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// ================= STACK =================
+
+struct Stack
+{
+    char bookings[MAX][100];
+    int top;
+};
+
+// Initialize Stack
+void initStack(struct Stack *s)
+{
+    s->top = -1;
+}
+
+// Check if Stack is Empty
+int isStackEmpty(struct Stack *s)
+{
+    return s->top == -1;
+}
+
+// Push - Add booking
+void push(struct Stack *s, char booking[])
+{
+    if (s->top == MAX - 1)
+    {
+        printf("Stack is full!\n");
+        return;
+    }
+
+    s->top++;
+    strcpy(s->bookings[s->top], booking);
+
+    printf("Booking added to stack: %s\n", booking);
+}
+
+// Pop - Remove most recent booking
+void pop(struct Stack *s)
+{
+    if (isStackEmpty(s))
+    {
+        printf("Stack is empty!\n");
+        return;
+    }
+
+    printf("Booking removed from stack: %s\n",
+           s->bookings[s->top]);
+
+    s->top--;
+}
+
+// Peek - View most recent booking
+void peek(struct Stack *s)
+{
+    if (isStackEmpty(s))
+    {
+        printf("Stack is empty!\n");
+        return;
+    }
+
+    printf("Most recent booking: %s\n",
+           s->bookings[s->top]);
+}
+
+
+// ================= QUEUE =================
+
+struct Queue
+{
+    char bookings[MAX][100];
+    int front;
+    int rear;
+};
+
+// Initialize Queue
+void initQueue(struct Queue *q)
+{
+    q->front = 0;
+    q->rear = -1;
+}
+
+// Check if Queue is Empty
+int isQueueEmpty(struct Queue *q)
+{
+    return q->rear < q->front;
+}
+
+// Enqueue - Add booking
+void enqueue(struct Queue *q, char booking[])
+{
+    if (q->rear == MAX - 1)
+    {
+        printf("Queue is full!\n");
+        return;
+    }
+
+    q->rear++;
+    strcpy(q->bookings[q->rear], booking);
+
+    printf("Booking added to queue: %s\n", booking);
+}
+
+// Dequeue - Remove oldest booking
+void dequeue(struct Queue *q)
+{
+    if (isQueueEmpty(q))
+    {
+        printf("Queue is empty!\n");
+        return;
+    }
+
+    printf("Booking removed from queue: %s\n",
+           q->bookings[q->front]);
+
+    q->front++;
+}
+
+// Front - View oldest booking
+void front(struct Queue *q)
+{
+    if (isQueueEmpty(q))
+    {
+        printf("Queue is empty!\n");
+        return;
+    }
+
+    printf("Oldest booking: %s\n",
+           q->bookings[q->front]);
+}
+
+
+// ================= MAIN =================
+
+int main()
+{
+    struct Stack stack;
+    struct Queue queue;
+
+    // Initialize
+    initStack(&stack);
+    initQueue(&queue);
+
+    // -------- STACK MANAGEMENT --------
+
+    printf("===== STACK MANAGEMENT =====\n");
+
+    push(&stack, "Booking A - Chennai to Bangalore");
+    push(&stack, "Booking B - Chennai to Coimbatore");
+    push(&stack, "Booking C - Chennai to Madurai");
+
+    // View most recent booking
+    peek(&stack);
+
+    // Remove most recent booking
+    pop(&stack);
+
+    // View again
+    peek(&stack);
+
+    // Check if empty
+    printf("Is Stack Empty? %s\n",
+           isStackEmpty(&stack) ? "Yes" : "No");
+
+
+    // -------- QUEUE MANAGEMENT --------
+
+    printf("\n===== QUEUE MANAGEMENT =====\n");
+
+    enqueue(&queue, "Booking 101 - Chennai to Bangalore");
+    enqueue(&queue, "Booking 102 - Chennai to Salem");
+    enqueue(&queue, "Booking 103 - Chennai to Madurai");
+
+    // View oldest booking
+    front(&queue);
+
+    // Remove oldest booking
+    dequeue(&queue);
+
+    // View again
+    front(&queue);
+
+    // Check if empty
+    printf("Is Queue Empty? %s\n",
+           isQueueEmpty(&queue) ? "Yes" : "No");
+
+    return 0;
+}

@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+#define MAX 100
+
+int memo[MAX];
+
+// Fibonacci using Dynamic Programming (Memoization)
+int fibonacci(int n) {
+    if (n <= 1)
+        return n;
+
+    // Return already calculated value
+    if (memo[n] != -1)
+        return memo[n];
+
+    // Calculate and store the result
+    memo[n] = fibonacci(n - 1) + fibonacci(n - 2);
+
+    return memo[n];
+}
+
+int main() {
+    int n = 10;
+
+    // Initialize memo array
+    for (int i = 0; i < MAX; i++)
+        memo[i] = -1;
+
+    printf("Fibonacci(%d) = %d\n", n, fibonacci(n));
+
+    return 0;
+}

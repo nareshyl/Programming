@@ -1,0 +1,157 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// ================= STACK =================
+
+struct Stack {
+    char tasks[MAX][100];
+    int top;
+};
+
+// Initialize Stack
+void initStack(struct Stack *s) {
+    s->top = -1;
+}
+
+// Check if Stack is Empty
+int isStackEmpty(struct Stack *s) {
+    return s->top == -1;
+}
+
+// Push - Add task
+void push(struct Stack *s, char task[]) {
+    if (s->top == MAX - 1) {
+        printf("Stack is full!\n");
+        return;
+    }
+
+    s->top++;
+    strcpy(s->tasks[s->top], task);
+
+    printf("Task added to stack: %s\n", task);
+}
+
+// Pop - Remove recent task
+void pop(struct Stack *s) {
+    if (isStackEmpty(s)) {
+        printf("Stack is empty!\n");
+        return;
+    }
+
+    printf("Task removed from stack: %s\n", s->tasks[s->top]);
+    s->top--;
+}
+
+// Peek - View recent task
+void peek(struct Stack *s) {
+    if (isStackEmpty(s)) {
+        printf("Stack is empty!\n");
+        return;
+    }
+
+    printf("Top task: %s\n", s->tasks[s->top]);
+}
+
+
+// ================= QUEUE =================
+
+struct Queue {
+    char tasks[MAX][100];
+    int front;
+    int rear;
+};
+
+// Initialize Queue
+void initQueue(struct Queue *q) {
+    q->front = 0;
+    q->rear = -1;
+}
+
+// Check if Queue is Empty
+int isQueueEmpty(struct Queue *q) {
+    return q->rear < q->front;
+}
+
+// Enqueue - Add task
+void enqueue(struct Queue *q, char task[]) {
+    if (q->rear == MAX - 1) {
+        printf("Queue is full!\n");
+        return;
+    }
+
+    q->rear++;
+    strcpy(q->tasks[q->rear], task);
+
+    printf("Task added to queue: %s\n", task);
+}
+
+// Dequeue - Remove oldest task
+void dequeue(struct Queue *q) {
+    if (isQueueEmpty(q)) {
+        printf("Queue is empty!\n");
+        return;
+    }
+
+    printf("Task removed from queue: %s\n", q->tasks[q->front]);
+    q->front++;
+}
+
+// Front - View oldest task
+void front(struct Queue *q) {
+    if (isQueueEmpty(q)) {
+        printf("Queue is empty!\n");
+        return;
+    }
+
+    printf("Front task: %s\n", q->tasks[q->front]);
+}
+
+
+// ================= MAIN =================
+
+int main() {
+
+    struct Stack stack;
+    struct Queue queue;
+
+    // Initialize
+    initStack(&stack);
+    initQueue(&queue);
+
+    // -------- STACK OPERATIONS --------
+
+    printf("===== STACK MANAGEMENT =====\n");
+
+    push(&stack, "Complete Assignment");
+    push(&stack, "Study Data Structures");
+    push(&stack, "Practice C");
+
+    peek(&stack);
+
+    pop(&stack);
+    pop(&stack);
+
+    printf("Is Stack Empty? %s\n",
+           isStackEmpty(&stack) ? "Yes" : "No");
+
+
+    // -------- QUEUE OPERATIONS --------
+
+    printf("\n===== QUEUE MANAGEMENT =====\n");
+
+    enqueue(&queue, "Attend Class");
+    enqueue(&queue, "Complete Project");
+    enqueue(&queue, "Prepare for Exam");
+
+    front(&queue);
+
+    dequeue(&queue);
+    dequeue(&queue);
+
+    printf("Is Queue Empty? %s\n",
+           isQueueEmpty(&queue) ? "Yes" : "No");
+
+    return 0;
+}

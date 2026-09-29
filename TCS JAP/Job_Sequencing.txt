@@ -1,0 +1,158 @@
+#include <stdio.h>
+
+#define MAX 100
+
+// Structure for a job
+struct Job {
+    char id;
+    int deadline;
+    int profit;
+};
+
+// Function to find maximum of two numbers
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+// --------------------------------------------------
+// Dynamic Programming Solution
+// --------------------------------------------------
+int jobSchedulingDP(struct Job jobs[], int n, int maxDeadline) {
+
+    int dp[MAX + 1];
+
+    // Initialize DP array
+    for (int i = 0; i <= maxDeadline; i++) {
+        dp[i] = 0;
+    }
+
+    /*
+       DP idea:
+       dp[t] = maximum profit that can be earned
+       using at most t available time slots.
+    */
+
+    for (int i = 0; i < n; i++) {
+
+        int deadline = jobs[i].deadline;
+        int profit = jobs[i].profit;
+
+        if (deadline > maxDeadline)
+            deadline = maxDeadline;
+
+        for (int t = deadline; t >= 1; t--) {
+            dp[t] = max(dp[t], dp[t - 1] + profit);
+        }
+    }
+
+    return dp[maxDeadline];
+}
+
+// --------------------------------------------------
+// Sort jobs according to profit
+// --------------------------------------------------
+void sortByProfit(struct Job jobs[], int n) {
+
+    struct Job temp;
+
+    for (int i = 0; i < n - 1; i++) {
+
+        for (int j = i + 1; j < n; j++) {
+
+            if (jobs[i].profit < jobs[j].profit) {
+
+                temp = jobs[i];
+                jobs[i] = jobs[j];
+                jobs[j] = temp;
+            }
+        }
+    }
+}
+
+// --------------------------------------------------
+// Greedy Job Scheduling
+// --------------------------------------------------
+int jobSchedulingGreedy(struct Job jobs[], int n, int maxDeadline) {
+
+    int slot[MAX];
+
+    for (int i = 0; i < MAX; i++) {
+        slot[i] = -1;
+    }
+
+    // Sort jobs by decreasing profit
+    sortByProfit(jobs, n);
+
+    int totalProfit = 0;
+
+    for (int i = 0; i < n; i++) {
+
+        // Find latest available slot before deadline
+        for (int j = jobs[i].deadline; j >= 1; j--) {
+
+            if (slot[j] == -1) {
+
+                slot[j] = i;
+                totalProfit += jobs[i].profit;
+
+                break;
+            }
+        }
+    }
+
+    printf("\nGreedy Job Schedule:\n");
+
+    for (int i = 1; i <= maxDeadline; i++) {
+
+        if (slot[i] != -1) {
+            printf("Slot %d -> Job %c\n",
+                   i, jobs[slot[i]].id);
+        }
+    }
+
+    return totalProfit;
+}
+
+// --------------------------------------------------
+// Main Function
+// --------------------------------------------------
+int main() {
+
+    struct Job jobs[] = {
+        {'A', 2, 100},
+        {'B', 1, 19},
+        {'C', 2, 27},
+        {'D', 1, 25},
+        {'E', 3, 15}
+    };
+
+    int n = sizeof(jobs) / sizeof(jobs[0]);
+
+    int maxDeadline = 3;
+
+    // ---------------- DP ----------------
+    int dpProfit = jobSchedulingDP(
+        jobs, n, maxDeadline
+    );
+
+    printf("Dynamic Programming Result: %d\n",
+           dpProfit);
+
+    // ---------------- Greedy ----------------
+
+    // Create a separate copy because Greedy sorts jobs
+    struct Job greedyJobs[MAX];
+
+    for (int i = 0; i < n; i++) {
+        greedyJobs[i] = jobs[i];
+    }
+
+    int greedyProfit = jobSchedulingGreedy(
+        greedyJobs, n, maxDeadline
+    );
+
+    printf("\nGreedy Algorithm Result: %d\n",
+           greedyProfit);
+
+    return 0;
+}

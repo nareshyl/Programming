@@ -1,0 +1,186 @@
+#include <stdio.h>
+
+#define MAX 100
+
+// Display prices
+void display(float prices[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%.2f ", prices[i]);
+    }
+    printf("\n");
+}
+
+// ---------------- SELECTION SORT ----------------
+void selectionSort(float prices[], int n) {
+    int i, j, minIndex;
+    float temp;
+
+    for (i = 0; i < n - 1; i++) {
+        minIndex = i;
+
+        for (j = i + 1; j < n; j++) {
+            if (prices[j] < prices[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        temp = prices[i];
+        prices[i] = prices[minIndex];
+        prices[minIndex] = temp;
+    }
+}
+
+// ---------------- MERGE FUNCTION ----------------
+void merge(float prices[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    float L[n1], R[n2];
+
+    int i, j, k;
+
+    // Copy left half
+    for (i = 0; i < n1; i++) {
+        L[i] = prices[left + i];
+    }
+
+    // Copy right half
+    for (j = 0; j < n2; j++) {
+        R[j] = prices[mid + 1 + j];
+    }
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    // Merge both halves
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            prices[k] = L[i];
+            i++;
+        } else {
+            prices[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Copy remaining left elements
+    while (i < n1) {
+        prices[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Copy remaining right elements
+    while (j < n2) {
+        prices[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+// ---------------- MERGE SORT ----------------
+void mergeSort(float prices[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(prices, left, mid);
+        mergeSort(prices, mid + 1, right);
+
+        merge(prices, left, mid, right);
+    }
+}
+
+// ---------------- LINEAR SEARCH ----------------
+int linearSearch(float prices[], int n, float target) {
+    for (int i = 0; i < n; i++) {
+        if (prices[i] == target) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+// ---------------- BINARY SEARCH ----------------
+int binarySearch(float prices[], int n, float target) {
+    int low = 0;
+    int high = n - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (prices[mid] == target) {
+            return mid;
+        }
+        else if (prices[mid] < target) {
+            low = mid + 1;
+        }
+        else {
+            high = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+// ---------------- MAIN FUNCTION ----------------
+int main() {
+    int n;
+    float prices[MAX];
+    float target;
+
+    printf("Enter number of products: ");
+    scanf("%d", &n);
+
+    printf("\nEnter the prices of %d products:\n", n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%f", &prices[i]);
+    }
+
+    // Original prices
+    printf("\nOriginal Prices:\n");
+    display(prices, n);
+
+    // Selection Sort
+    selectionSort(prices, n);
+
+    printf("\nAfter Selection Sort:\n");
+    display(prices, n);
+
+    // Merge Sort
+    mergeSort(prices, 0, n - 1);
+
+    printf("\nAfter Merge Sort:\n");
+    display(prices, n);
+
+    // Price to search
+    printf("\nEnter price to search: ");
+    scanf("%f", &target);
+
+    // Linear Search
+    int linearResult = linearSearch(prices, n, target);
+
+    if (linearResult != -1) {
+        printf("\nLinear Search: %.2f found at index %d\n",
+               target, linearResult);
+    }
+    else {
+        printf("\nLinear Search: %.2f not found\n", target);
+    }
+
+    // Binary Search
+    int binaryResult = binarySearch(prices, n, target);
+
+    if (binaryResult != -1) {
+        printf("Binary Search: %.2f found at index %d\n",
+               target, binaryResult);
+    }
+    else {
+        printf("Binary Search: %.2f not found\n", target);
+    }
+
+    return 0;
+}

@@ -1,0 +1,203 @@
+#include <stdio.h>
+
+#define MAX 100
+#define INF 99999
+
+struct Graph
+{
+    int vertices;
+    int adj[MAX][MAX];
+};
+
+// Initialize graph
+void initGraph(struct Graph *g)
+{
+    g->vertices = 0;
+
+    for (int i = 0; i < MAX; i++)
+    {
+        for (int j = 0; j < MAX; j++)
+        {
+            g->adj[i][j] = INF;
+        }
+    }
+}
+
+// Add Vertex
+void addVertex(struct Graph *g)
+{
+    if (g->vertices >= MAX)
+    {
+        printf("Maximum number of vertices reached.\n");
+        return;
+    }
+
+    printf("Vertex %d added.\n", g->vertices);
+
+    g->vertices++;
+}
+
+// Add Edge with Weight
+void addEdge(struct Graph *g, int u, int v, int weight)
+{
+    if (u >= g->vertices || v >= g->vertices)
+    {
+        printf("Invalid vertex.\n");
+        return;
+    }
+
+    if (weight < 0)
+    {
+        printf("Dijkstra's algorithm does not support negative weights.\n");
+        return;
+    }
+
+    // Undirected graph
+    g->adj[u][v] = weight;
+    g->adj[v][u] = weight;
+
+    printf("Edge added: %d --(%d)-- %d\n",
+           u, weight, v);
+}
+
+// Display Graph
+void display(struct Graph *g)
+{
+    printf("\n===== GRAPH =====\n");
+
+    for (int i = 0; i < g->vertices; i++)
+    {
+        printf("%d -> ", i);
+
+        for (int j = 0; j < g->vertices; j++)
+        {
+            if (g->adj[i][j] != INF)
+            {
+                printf("%d(%d) ",
+                       j,
+                       g->adj[i][j]);
+            }
+        }
+
+        printf("\n");
+    }
+}
+
+// Find vertex with minimum distance
+int minDistance(int distance[],
+                int visited[],
+                int vertices)
+{
+    int min = INF;
+    int minIndex = -1;
+
+    for (int i = 0; i < vertices; i++)
+    {
+        if (!visited[i] && distance[i] < min)
+        {
+            min = distance[i];
+            minIndex = i;
+        }
+    }
+
+    return minIndex;
+}
+
+// Dijkstra's Algorithm
+void dijkstra(struct Graph *g, int source)
+{
+    int distance[MAX];
+    int visited[MAX];
+
+    // Initialize
+    for (int i = 0; i < g->vertices; i++)
+    {
+        distance[i] = INF;
+        visited[i] = 0;
+    }
+
+    distance[source] = 0;
+
+    // Process all vertices
+    for (int count = 0;
+         count < g->vertices - 1;
+         count++)
+    {
+        int u = minDistance(distance,
+                            visited,
+                            g->vertices);
+
+        if (u == -1)
+            break;
+
+        visited[u] = 1;
+
+        // Update neighboring vertices
+        for (int v = 0;
+             v < g->vertices;
+             v++)
+        {
+            if (!visited[v] &&
+                g->adj[u][v] != INF &&
+                distance[u] != INF &&
+                distance[u] + g->adj[u][v]
+                    < distance[v])
+            {
+                distance[v] =
+                    distance[u] + g->adj[u][v];
+            }
+        }
+    }
+
+    // Display shortest distances
+    printf("\n===== DIJKSTRA SHORTEST PATH =====\n");
+
+    printf("Source Vertex: %d\n\n", source);
+
+    for (int i = 0; i < g->vertices; i++)
+    {
+        if (distance[i] == INF)
+        {
+            printf("Vertex %d : Unreachable\n", i);
+        }
+        else
+        {
+            printf("Vertex %d : %d\n",
+                   i,
+                   distance[i]);
+        }
+    }
+}
+
+// Main Function
+int main()
+{
+    struct Graph g;
+
+    initGraph(&g);
+
+    // Add 6 vertices
+    for (int i = 0; i < 6; i++)
+    {
+        addVertex(&g);
+    }
+
+    // Add weighted edges
+    addEdge(&g, 0, 1, 4);
+    addEdge(&g, 0, 2, 2);
+    addEdge(&g, 1, 2, 1);
+    addEdge(&g, 1, 3, 5);
+    addEdge(&g, 2, 3, 8);
+    addEdge(&g, 2, 4, 10);
+    addEdge(&g, 3, 4, 2);
+    addEdge(&g, 3, 5, 6);
+    addEdge(&g, 4, 5, 3);
+
+    // Display graph
+    display(&g);
+
+    // Run Dijkstra from vertex 0
+    dijkstra(&g, 0);
+
+    return 0;
+}

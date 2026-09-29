@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+// Create a new node
+struct Node* createNode(int data)
+{
+    struct Node *newNode =
+        (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+
+    return newNode;
+}
+
+// Find Lowest Common Ancestor
+struct Node* findLCA(struct Node *root, int p, int q)
+{
+    // If tree is empty
+    if (root == NULL)
+        return NULL;
+
+    // If current node is p or q
+    if (root->data == p || root->data == q)
+        return root;
+
+    // Search in left subtree
+    struct Node *leftLCA = findLCA(root->left, p, q);
+
+    // Search in right subtree
+    struct Node *rightLCA = findLCA(root->right, p, q);
+
+    // p and q are found in different subtrees
+    if (leftLCA != NULL && rightLCA != NULL)
+        return root;
+
+    // Return whichever subtree contains p or q
+    if (leftLCA != NULL)
+        return leftLCA;
+
+    return rightLCA;
+}
+
+int main()
+{
+    /*
+              3
+             / \
+            5   1
+           / \ / \
+          6  2 0  8
+            / \
+           7   4
+    */
+
+    struct Node *root = createNode(3);
+
+    root->left = createNode(5);
+    root->right = createNode(1);
+
+    root->left->left = createNode(6);
+    root->left->right = createNode(2);
+
+    root->right->left = createNode(0);
+    root->right->right = createNode(8);
+
+    root->left->right->left = createNode(7);
+    root->left->right->right = createNode(4);
+
+    // Example 1
+    int p = 5;
+    int q = 1;
+
+    struct Node *lca = findLCA(root, p, q);
+
+    printf("LCA of %d and %d = %d\n",
+           p, q, lca->data);
+
+    // Example 2
+    p = 7;
+    q = 4;
+
+    lca = findLCA(root, p, q);
+
+    printf("LCA of %d and %d = %d\n",
+           p, q, lca->data);
+
+    return 0;
+}
