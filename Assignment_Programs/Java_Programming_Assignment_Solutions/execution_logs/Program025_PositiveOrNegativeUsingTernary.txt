@@ -1,0 +1,11 @@
+Program: Program025_PositiveOrNegativeUsingTernary
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+
+=== STDOUT ===
+Enter a number: Positive
+
+=== STDERR ===

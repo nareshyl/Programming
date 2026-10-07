@@ -1,0 +1,12 @@
+Program: Program009_RectanglePerimeter
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+10
+10
+
+=== STDOUT ===
+Enter length and breadth: Perimeter = 40.0
+
+=== STDERR ===

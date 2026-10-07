@@ -1,0 +1,13 @@
+Program: Program011_SimpleInterest
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+
+=== STDOUT ===
+Enter principal, annual rate (%), and time (years): Simple Interest = 1.5625E11
+
+=== STDERR ===

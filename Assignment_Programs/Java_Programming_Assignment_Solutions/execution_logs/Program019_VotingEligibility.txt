@@ -1,0 +1,11 @@
+Program: Program019_VotingEligibility
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25
+
+=== STDOUT ===
+Enter age: Eligible to vote
+
+=== STDERR ===

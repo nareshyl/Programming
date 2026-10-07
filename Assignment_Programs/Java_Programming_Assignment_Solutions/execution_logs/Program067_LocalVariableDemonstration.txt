@@ -1,0 +1,10 @@
+Program: Program067_LocalVariableDemonstration
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+
+=== STDOUT ===
+Local variable = 42
+
+=== STDERR ===

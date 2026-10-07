@@ -1,0 +1,12 @@
+Program: Program005_CalculateProduct
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+101
+
+=== STDOUT ===
+Enter two numbers: Product = 10201.0
+
+=== STDERR ===

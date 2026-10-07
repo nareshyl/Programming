@@ -1,0 +1,11 @@
+Program: Program028_DoubleANumber
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+
+=== STDOUT ===
+Enter a number: Doubled value = 202.0
+
+=== STDERR ===

@@ -1,0 +1,11 @@
+Program: Program029_IncrementNumber
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+
+=== STDOUT ===
+Enter an integer: After increment = 102
+
+=== STDERR ===

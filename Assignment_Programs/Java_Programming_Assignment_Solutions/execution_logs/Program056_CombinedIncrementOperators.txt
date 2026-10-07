@@ -1,0 +1,13 @@
+Program: Program056_CombinedIncrementOperators
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+
+=== STDOUT ===
+a before = 5, ++a = 6, after = 6
+b before post-increment = 5
+b++ result = 5
+b after = 6
+
+=== STDERR ===

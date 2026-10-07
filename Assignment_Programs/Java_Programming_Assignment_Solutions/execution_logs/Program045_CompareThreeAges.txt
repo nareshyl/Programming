@@ -1,0 +1,14 @@
+Program: Program045_CompareThreeAges
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25
+25
+25
+
+=== STDOUT ===
+Enter three numbers: All equal: true
+a >= b: true, b >= c: true, a >= c: true
+
+=== STDERR ===

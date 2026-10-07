@@ -1,0 +1,11 @@
+Program: Program070_ElectricityBillWithTax
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+150
+
+=== STDOUT ===
+Enter units consumed: Basic bill = 900.0
+
+=== STDERR ===

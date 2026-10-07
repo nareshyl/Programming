@@ -1,0 +1,16 @@
+Program: Program074_EmployeePayrollSystem
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+25000
+
+=== STDOUT ===
+Employee ID, basic salary, bonus %, deduction %: Company: COMP001, Employee ID: 25000
+Basic: 25000.0, Bonus: 6250000.0, Gross: 6275000.0
+Deduction: 1.56875E9, Final salary: -1.562475E9
+
+=== STDERR ===

@@ -1,0 +1,14 @@
+Program: Program086_EmployeeObjectComparison
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+85
+85
+85
+85
+
+=== STDOUT ===
+Enter first roll number and marks, then second roll number and marks: Both students have equal marks.
+
+=== STDERR ===

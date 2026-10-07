@@ -1,0 +1,13 @@
+Program: Program040_ShoppingBill
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+
+=== STDOUT ===
+Enter prices of three products: Total bill = 75000.0
+
+=== STDERR ===

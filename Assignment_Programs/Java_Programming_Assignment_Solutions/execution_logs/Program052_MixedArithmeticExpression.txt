@@ -1,0 +1,10 @@
+Program: Program052_MixedArithmeticExpression
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+
+=== STDOUT ===
+20 - 6 + 4 * 2 / 2 = 18
+
+=== STDERR ===

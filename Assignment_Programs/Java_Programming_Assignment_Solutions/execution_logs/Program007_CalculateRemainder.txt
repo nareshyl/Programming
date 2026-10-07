@@ -1,0 +1,12 @@
+Program: Program007_CalculateRemainder
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+101
+
+=== STDOUT ===
+Enter two integers: Remainder = 0
+
+=== STDERR ===

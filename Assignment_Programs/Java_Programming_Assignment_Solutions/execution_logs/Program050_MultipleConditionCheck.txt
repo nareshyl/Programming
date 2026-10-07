@@ -1,0 +1,13 @@
+Program: Program050_MultipleConditionCheck
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25
+25
+25
+
+=== STDOUT ===
+Enter age, salary, employment status (1 employed, 0 not): Conditions not met
+
+=== STDERR ===

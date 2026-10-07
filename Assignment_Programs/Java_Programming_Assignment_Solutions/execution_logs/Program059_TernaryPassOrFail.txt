@@ -1,0 +1,11 @@
+Program: Program059_TernaryPassOrFail
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+85
+
+=== STDOUT ===
+Enter marks: Pass
+
+=== STDERR ===

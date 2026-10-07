@@ -1,0 +1,15 @@
+Program: Program084_OperatorPrecedenceAnalysis
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+101
+101
+
+=== STDOUT ===
+Enter a, b, c: a+b*c = 10302
+(a+b)*c = 20402
+a-b/c = 100
+
+=== STDERR ===

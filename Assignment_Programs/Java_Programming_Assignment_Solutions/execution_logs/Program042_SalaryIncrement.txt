@@ -1,0 +1,14 @@
+Program: Program042_SalaryIncrement
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+25000
+
+=== STDOUT ===
+Enter salary, increment %, bonus %, deduction %: Final salary = -3.92181225E11
+
+=== STDERR ===

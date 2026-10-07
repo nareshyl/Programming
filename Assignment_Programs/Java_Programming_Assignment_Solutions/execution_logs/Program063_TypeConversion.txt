@@ -1,0 +1,11 @@
+Program: Program063_TypeConversion
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+
+=== STDOUT ===
+int value = 125
+Converted double = 125.0
+
+=== STDERR ===

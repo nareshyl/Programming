@@ -1,0 +1,14 @@
+Program: Program012_TotalMarks
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+85
+85
+85
+
+=== STDOUT ===
+Enter marks for three subjects: Total = 255.0
+Average = 85.0
+
+=== STDERR ===

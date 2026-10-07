@@ -1,0 +1,11 @@
+Program: Program048_DrivingEligibility
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25 true
+
+=== STDOUT ===
+Enter age and licence status (true/false): Eligible to drive
+
+=== STDERR ===

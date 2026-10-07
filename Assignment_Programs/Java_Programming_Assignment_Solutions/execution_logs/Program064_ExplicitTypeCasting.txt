@@ -1,0 +1,11 @@
+Program: Program064_ExplicitTypeCasting
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+
+=== STDOUT ===
+double value = 123.987
+After casting to int = 123
+
+=== STDERR ===

@@ -1,0 +1,14 @@
+Program: Program038_FuelCostCalculation
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+
+=== STDOUT ===
+Enter distance (km), fuel used (litres), price per litre: Total fuel cost = 6.25E8
+Cost per km = 25000.0
+
+=== STDERR ===

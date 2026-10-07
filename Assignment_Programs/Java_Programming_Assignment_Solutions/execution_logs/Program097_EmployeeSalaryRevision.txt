@@ -1,0 +1,16 @@
+Program: Program097_EmployeeSalaryRevision
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+
+=== STDOUT ===
+Enter basic salary, bonus %, and deduction %: Bonus = 6250000.0
+Gross salary = 6275000.0
+Deduction = 1.56875E9
+Final salary = -1.562475E9
+
+=== STDERR ===

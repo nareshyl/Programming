@@ -1,0 +1,12 @@
+Program: Program010_SquareCalculation
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+10
+
+=== STDOUT ===
+Enter side: Area = 100.0
+Perimeter = 40.0
+
+=== STDERR ===

@@ -1,0 +1,13 @@
+Program: Program072_BankAccountTransaction
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+25000
+25000
+
+=== STDOUT ===
+Opening balance, deposit, withdrawal: Bank code: BK001, Final balance: 25000.0
+
+=== STDERR ===

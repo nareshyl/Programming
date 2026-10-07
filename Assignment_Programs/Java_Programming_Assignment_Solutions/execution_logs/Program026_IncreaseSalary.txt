@@ -1,0 +1,11 @@
+Program: Program026_IncreaseSalary
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+25000
+
+=== STDOUT ===
+Enter salary: Updated salary = 26000.0
+
+=== STDERR ===

@@ -1,0 +1,14 @@
+Program: Program054_ArithmeticExpression
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+101
+101
+101
+
+=== STDOUT ===
+Enter four numbers (a, b, c, d): Result = 101.0
+
+=== STDERR ===

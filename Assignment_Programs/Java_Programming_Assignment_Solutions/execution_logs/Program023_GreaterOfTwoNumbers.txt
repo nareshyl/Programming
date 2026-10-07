@@ -1,0 +1,12 @@
+Program: Program023_GreaterOfTwoNumbers
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+101
+
+=== STDOUT ===
+Enter two numbers: Greater = 101.0
+
+=== STDERR ===

@@ -1,0 +1,11 @@
+Program: Program015_KilometresToMetres
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+10
+
+=== STDOUT ===
+Enter distance in kilometres: Metres = 10000.0
+
+=== STDERR ===

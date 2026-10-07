@@ -1,0 +1,11 @@
+Program: Program065_IntegerToDoubleConversion
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+
+=== STDOUT ===
+Enter an integer: Double value = 101.0
+
+=== STDERR ===

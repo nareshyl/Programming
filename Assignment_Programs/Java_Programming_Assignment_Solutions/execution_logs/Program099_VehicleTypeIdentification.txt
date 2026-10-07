@@ -1,0 +1,11 @@
+Program: Program099_VehicleTypeIdentification
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+
+=== STDOUT ===
+First object is a Car.
+Second object is a Bike.
+
+=== STDERR ===

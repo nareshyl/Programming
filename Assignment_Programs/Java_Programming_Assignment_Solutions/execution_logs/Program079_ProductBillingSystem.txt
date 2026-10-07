@@ -1,0 +1,14 @@
+Program: Program079_ProductBillingSystem
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+2
+2
+2
+2
+
+=== STDOUT ===
+Price, quantity, discount %, tax %: Subtotal=4.0, Discount=0.08, Tax=0.0784, Final bill=3.9983999999999997
+
+=== STDERR ===

@@ -1,0 +1,15 @@
+Program: Program087_StudentResultSystem
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+85
+85
+85
+85
+
+=== STDOUT ===
+Roll number and three subject marks: Roll: 85, Total: 255.0, Average: 85.0
+Pass
+
+=== STDERR ===

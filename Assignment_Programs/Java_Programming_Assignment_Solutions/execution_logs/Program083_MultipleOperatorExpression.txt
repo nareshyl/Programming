@@ -1,0 +1,15 @@
+Program: Program083_MultipleOperatorExpression
+Status: RAN
+Exit code: 0
+
+=== INPUT SENT ===
+101
+101
+101
+101
+101
+
+=== STDOUT ===
+Enter five integers: Result=10302, condition=true
+
+=== STDERR ===
