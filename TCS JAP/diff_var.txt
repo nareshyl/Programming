@@ -1,0 +1,36 @@
+public class VariableDemo {
+
+    // Global-like variable
+    static int globalVariable = 10;
+
+    static void demonstrateVariables() {
+
+        // Local variable
+        int localVariable = 5;
+
+        // Static variable
+        // static local variables are not supported in Java,
+        // so we use a class-level static variable.
+        staticVariable++;
+
+        System.out.println("Global Variable : " + globalVariable);
+        System.out.println("Local Variable  : " + localVariable);
+        System.out.println("Static Variable : " + staticVariable);
+
+        globalVariable++;
+    }
+
+    static int staticVariable = 0;
+
+    public static void main(String[] args) {
+
+        System.out.println("First Function Call:");
+        demonstrateVariables();
+
+        System.out.println("\nSecond Function Call:");
+        demonstrateVariables();
+
+        System.out.println("\nThird Function Call:");
+        demonstrateVariables();
+    }
+}

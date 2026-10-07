@@ -1,0 +1,52 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Base class
+class Course {
+    void getSchedule() {
+        System.out.println("General course schedule");
+    }
+}
+
+// Online Course
+class OnlineCourse extends Course {
+    @Override
+    void getSchedule() {
+        System.out.println("Online Course: Self-paced / Live online sessions");
+    }
+}
+
+// Offline Course
+class OfflineCourse extends Course {
+    @Override
+    void getSchedule() {
+        System.out.println("Offline Course: Classroom schedule");
+    }
+}
+
+// Hybrid Course
+class HybridCourse extends Course {
+    @Override
+    void getSchedule() {
+        System.out.println("Hybrid Course: Online + Classroom sessions");
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+
+        List<Course> courses = new ArrayList<>();
+
+        courses.add(new OnlineCourse());
+        courses.add(new OfflineCourse());
+        courses.add(new HybridCourse());
+
+        System.out.println("Course Schedules:");
+        System.out.println("-----------------");
+
+        for (Course course : courses) {
+            course.getSchedule();
+        }
+    }
+}

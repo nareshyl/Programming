@@ -1,0 +1,56 @@
+// Abstract base class
+abstract class Appliance {
+
+    abstract void turnOn();
+
+    abstract void turnOff();
+}
+
+// Cooling Device interface
+interface CoolingDevice {
+    void cool();
+}
+
+// Wi-Fi Enabled interface
+interface WiFiEnabled {
+    void connectWiFi();
+}
+
+// Smart Fridge
+class SmartFridge extends Appliance
+        implements CoolingDevice, WiFiEnabled {
+
+    @Override
+    public void turnOn() {
+        System.out.println("Smart Fridge is turned ON.");
+    }
+
+    @Override
+    public void turnOff() {
+        System.out.println("Smart Fridge is turned OFF.");
+    }
+
+    @Override
+    public void cool() {
+        System.out.println("Smart Fridge is cooling.");
+    }
+
+    @Override
+    public void connectWiFi() {
+        System.out.println("Smart Fridge connected to Wi-Fi.");
+    }
+}
+
+// Main class
+public class Main {
+
+    public static void main(String[] args) {
+
+        SmartFridge fridge = new SmartFridge();
+
+        fridge.turnOn();
+        fridge.cool();
+        fridge.connectWiFi();
+        fridge.turnOff();
+    }
+}

@@ -1,0 +1,77 @@
+//Ex.no:1 Product Billing System
+class Product {
+    String name;
+    double price;
+
+    Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    double get_final_price() {
+        return price;
+    }
+}
+
+class RegularProduct extends Product {
+
+    RegularProduct(String name, double price) {
+        super(name, price);
+    }
+
+    @Override
+    double get_final_price() {
+        return price;
+    }
+}
+
+class DiscountedProduct extends Product {
+
+    DiscountedProduct(String name, double price) {
+        super(name, price);
+    }
+
+    @Override
+    double get_final_price() {
+        return price - (price * 0.10);
+    }
+}
+
+class TaxExemptProduct extends Product {
+
+    TaxExemptProduct(String name, double price) {
+        super(name, price);
+    }
+
+    @Override
+    double get_final_price() {
+        return price;
+    }
+}
+
+class TaxedProduct extends Product {
+
+    TaxedProduct(String name, double price) {
+        super(name, price);
+    }
+
+    @Override
+    double get_final_price() {
+        return price + (price * 0.18);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Product p1 = new RegularProduct("Notebook", 1000);
+        Product p2 = new DiscountedProduct("Laptop Bag", 2000);
+        Product p3 = new TaxExemptProduct("Medical Book", 1500);
+        Product p4 = new TaxedProduct("Electronics", 5000);
+
+        System.out.println("Regular Product: ₹" + p1.get_final_price());
+        System.out.println("Discounted Product: ₹" + p2.get_final_price());
+        System.out.println("Tax Exempt Product: ₹" + p3.get_final_price());
+        System.out.println("Taxed Product: ₹" + p4.get_final_price());
+    }
+}

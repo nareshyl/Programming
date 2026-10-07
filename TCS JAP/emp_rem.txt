@@ -1,0 +1,62 @@
+//Exercise 2 — Employee / Remote Employee
+class Human {
+    String name;
+
+    Human(String name) {
+        this.name = name;
+    }
+}
+
+class Employee extends Human {
+    int employee_id;
+
+    Employee(String name, int employee_id) {
+        super(name);
+        this.employee_id = employee_id;
+    }
+}
+
+interface RemoteWorker {
+    void setLocation(String location);
+    String getLocation();
+}
+
+class RemoteEmployee extends Employee implements RemoteWorker {
+
+    String location;
+
+    RemoteEmployee(String name, int employee_id, String location) {
+        super(name, employee_id);
+        this.location = location;
+    }
+
+    @Override
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @Override
+    public String getLocation() {
+        return location;
+    }
+
+    void displayDetails() {
+        System.out.println("Employee Name : " + name);
+        System.out.println("Employee ID   : " + employee_id);
+        System.out.println("Location      : " + location);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        RemoteEmployee employee =
+                new RemoteEmployee(
+                        "Naresh",
+                        101,
+                        "Chennai"
+                );
+
+        employee.displayDetails();
+    }
+}

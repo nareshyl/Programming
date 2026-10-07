@@ -1,0 +1,196 @@
+// Railway Reservation System 
+import java.util.ArrayList;
+import java.util.List;
+
+// =====================================
+// Base Class: Train
+// =====================================
+class Train {
+    protected int trainID;
+    protected String trainName;
+    protected int capacity;
+
+    Train(int trainID, String trainName, int capacity) {
+        this.trainID = trainID;
+        this.trainName = trainName;
+        this.capacity = capacity;
+    }
+
+    // Update train details
+    void updateTrain(String trainName, int capacity) {
+        this.trainName = trainName;
+        this.capacity = capacity;
+    }
+
+    // Display train details
+    void displayTrain() {
+        System.out.println("Train ID   : " + trainID);
+        System.out.println("Train Name : " + trainName);
+        System.out.println("Capacity   : " + capacity);
+    }
+}
+
+
+// =====================================
+// Derived Class: PassengerTrain
+// =====================================
+class PassengerTrain extends Train {
+    private int numberOfCoaches;
+
+    PassengerTrain(int trainID, String trainName,
+                   int capacity, int numberOfCoaches) {
+
+        super(trainID, trainName, capacity);
+        this.numberOfCoaches = numberOfCoaches;
+    }
+
+    // Update passenger train details
+    void updatePassengerTrain(String trainName,
+                              int capacity,
+                              int numberOfCoaches) {
+
+        super.updateTrain(trainName, capacity);
+        this.numberOfCoaches = numberOfCoaches;
+    }
+
+    // Display passenger train details
+    @Override
+    void displayTrain() {
+        super.displayTrain();
+        System.out.println("Number of Coaches : " + numberOfCoaches);
+    }
+}
+
+
+// =====================================
+// Derived Class: FreightTrain
+// =====================================
+class FreightTrain extends Train {
+    private float cargoCapacity;
+
+    FreightTrain(int trainID, String trainName,
+                 int capacity, float cargoCapacity) {
+
+        super(trainID, trainName, capacity);
+        this.cargoCapacity = cargoCapacity;
+    }
+
+    // Update freight train details
+    void updateFreightTrain(String trainName,
+                            int capacity,
+                            float cargoCapacity) {
+
+        super.updateTrain(trainName, capacity);
+        this.cargoCapacity = cargoCapacity;
+    }
+
+    // Display freight train details
+    @Override
+    void displayTrain() {
+        super.displayTrain();
+        System.out.println("Cargo Capacity : " + cargoCapacity + " tons");
+    }
+}
+
+
+// =====================================
+// Railway Management System
+// =====================================
+class RailwayManagementSystem {
+
+    private List<Train> trains;
+
+    RailwayManagementSystem() {
+        trains = new ArrayList<>();
+    }
+
+    // Add a normal train
+    void addTrain(Train train) {
+        trains.add(train);
+    }
+
+    // Add passenger train
+    void addPassengerTrain(PassengerTrain train) {
+        trains.add(train);
+    }
+
+    // Add freight train
+    void addFreightTrain(FreightTrain train) {
+        trains.add(train);
+    }
+
+    // Display all trains
+    void displayAllTrains() {
+
+        System.out.println("\n========== ALL TRAINS ==========");
+
+        for (Train train : trains) {
+
+            train.displayTrain();
+
+            System.out.println("-------------------------------");
+        }
+    }
+}
+
+
+// =====================================
+// Main Class
+// =====================================
+public class Main {
+
+    public static void main(String[] args) {
+
+        RailwayManagementSystem railway =
+                new RailwayManagementSystem();
+
+        // Normal Train
+        Train train1 = new Train(
+                101,
+                "Express Train",
+                800
+        );
+
+        // Passenger Train
+        PassengerTrain train2 = new PassengerTrain(
+                102,
+                "Chennai Express",
+                1200,
+                18
+        );
+
+        // Freight Train
+        FreightTrain train3 = new FreightTrain(
+                103,
+                "Cargo Express",
+                500,
+                2500.5f
+        );
+
+        // Add trains
+        railway.addTrain(train1);
+        railway.addPassengerTrain(train2);
+        railway.addFreightTrain(train3);
+
+        // Update train details
+        train1.updateTrain(
+                "Super Express",
+                900
+        );
+
+        train2.updatePassengerTrain(
+                "Chennai Super Express",
+                1400,
+                20
+        );
+
+        train3.updateFreightTrain(
+                "National Cargo Express",
+                600,
+                3000.5f
+        );
+
+        // Display all trains
+        railway.displayAllTrains();
+    }
+}

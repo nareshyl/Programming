@@ -1,0 +1,385 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// --------------------------------------------------
+// Employee Class
+// --------------------------------------------------
+class Employee {
+    private int employeeId;
+    private String name;
+    private String position;
+    private float salary;
+    private float performanceRating;
+
+    public Employee(int employeeId, String name, String position,
+                    float salary, float performanceRating) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+        this.performanceRating = performanceRating;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public float getPerformanceRating() {
+        return performanceRating;
+    }
+
+    public void updateDetails(String name, String position,
+                              float salary, float performanceRating) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+        this.performanceRating = performanceRating;
+    }
+
+    public void displayDetails() {
+        System.out.printf(
+            "%-10d %-20s %-20s %-12.2f %-10.2f%n",
+            employeeId, name, position, salary, performanceRating
+        );
+    }
+}
+
+
+// --------------------------------------------------
+// PerformanceReview Class
+// --------------------------------------------------
+class PerformanceReview {
+    private int employeeId;
+    private String reviewDate;
+    private float rating;
+    private String comments;
+
+    public PerformanceReview(int employeeId, String reviewDate,
+                             float rating, String comments) {
+        this.employeeId = employeeId;
+        this.reviewDate = reviewDate;
+        this.rating = rating;
+        this.comments = comments;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getReviewDate() {
+        return reviewDate;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void updateReview(float rating, String comments) {
+        this.rating = rating;
+        this.comments = comments;
+    }
+
+    public void displayReview() {
+        System.out.println("Review Date : " + reviewDate);
+        System.out.println("Rating      : " + rating);
+        System.out.println("Comments    : " + comments);
+        System.out.println("----------------------------------------");
+    }
+}
+
+
+// --------------------------------------------------
+// EmployeeManagementSystem Class
+// --------------------------------------------------
+class EmployeeManagementSystem {
+
+    private ArrayList<Employee> employees;
+    private ArrayList<PerformanceReview> performanceReviews;
+
+    public EmployeeManagementSystem() {
+        employees = new ArrayList<>();
+        performanceReviews = new ArrayList<>();
+    }
+
+    // Check whether employee exists
+    private boolean employeeExists(int employeeId) {
+        for (Employee employee : employees) {
+            if (employee.getEmployeeId() == employeeId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Add Employee
+    public void addEmployee(Employee employee) {
+
+        if (employeeExists(employee.getEmployeeId())) {
+            System.out.println("Employee ID already exists.");
+            return;
+        }
+
+        employees.add(employee);
+        System.out.println("Employee added successfully.");
+    }
+
+    // Update Employee
+    public void updateEmployee(int employeeId, String name,
+                               String position, float salary,
+                               float performanceRating) {
+
+        for (Employee employee : employees) {
+
+            if (employee.getEmployeeId() == employeeId) {
+
+                employee.updateDetails(
+                    name,
+                    position,
+                    salary,
+                    performanceRating
+                );
+
+                System.out.println("Employee updated successfully.");
+                return;
+            }
+        }
+
+        System.out.println("Employee not found.");
+    }
+
+    // Display All Employees
+    public void displayAllEmployees() {
+
+        if (employees.isEmpty()) {
+            System.out.println("No employees available.");
+            return;
+        }
+
+        System.out.println("\n================ EMPLOYEE DETAILS ================");
+
+        System.out.printf(
+            "%-10s %-20s %-20s %-12s %-10s%n",
+            "ID", "Name", "Position", "Salary", "Rating"
+        );
+
+        System.out.println(
+            "--------------------------------------------------------------------------"
+        );
+
+        for (Employee employee : employees) {
+            employee.displayDetails();
+        }
+
+        System.out.println(
+            "--------------------------------------------------------------------------"
+        );
+    }
+
+    // Add Performance Review
+    public void addPerformanceReview(PerformanceReview review) {
+
+        if (!employeeExists(review.getEmployeeId())) {
+            System.out.println(
+                "Cannot add review. Employee does not exist."
+            );
+            return;
+        }
+
+        performanceReviews.add(review);
+
+        System.out.println("Performance review added successfully.");
+    }
+
+    // Update Performance Review
+    public void updatePerformanceReview(
+            int employeeId,
+            String reviewDate,
+            float newRating,
+            String newComments) {
+
+        for (PerformanceReview review : performanceReviews) {
+
+            if (review.getEmployeeId() == employeeId &&
+                review.getReviewDate().equals(reviewDate)) {
+
+                review.updateReview(newRating, newComments);
+
+                System.out.println(
+                    "Performance review updated successfully."
+                );
+
+                return;
+            }
+        }
+
+        System.out.println("Performance review not found.");
+    }
+
+    // Display Reviews for Employee
+    public void displayReviewsForEmployee(int employeeId) {
+
+        if (!employeeExists(employeeId)) {
+            System.out.println("Employee not found.");
+            return;
+        }
+
+        boolean found = false;
+
+        System.out.println(
+            "\n========== PERFORMANCE REVIEWS =========="
+        );
+
+        for (PerformanceReview review : performanceReviews) {
+
+            if (review.getEmployeeId() == employeeId) {
+
+                review.displayReview();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println(
+                "No performance reviews found for this employee."
+            );
+        }
+    }
+}
+
+
+// --------------------------------------------------
+// Main Class
+// --------------------------------------------------
+public class EmployeeManagementSystem {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        EmployeeManagementSystem system =
+            new EmployeeManagementSystem();
+
+        // ------------------------------------------
+        // Adding Employees
+        // ------------------------------------------
+
+        Employee emp1 = new Employee(
+            101,
+            "Arun Kumar",
+            "Software Engineer",
+            55000.0f,
+            4.5f
+        );
+
+        Employee emp2 = new Employee(
+            102,
+            "Priya Sharma",
+            "Project Manager",
+            75000.0f,
+            4.8f
+        );
+
+        system.addEmployee(emp1);
+        system.addEmployee(emp2);
+
+        // ------------------------------------------
+        // Display Employees
+        // ------------------------------------------
+
+        system.displayAllEmployees();
+
+        // ------------------------------------------
+        // Update Employee
+        // ------------------------------------------
+
+        system.updateEmployee(
+            101,
+            "Arun Kumar",
+            "Senior Software Engineer",
+            65000.0f,
+            4.7f
+        );
+
+        System.out.println("\nAfter Employee Update:");
+
+        system.displayAllEmployees();
+
+        // ------------------------------------------
+        // Add Performance Reviews
+        // ------------------------------------------
+
+        PerformanceReview review1 =
+            new PerformanceReview(
+                101,
+                "2026-10-01",
+                4.5f,
+                "Excellent technical performance."
+            );
+
+        PerformanceReview review2 =
+            new PerformanceReview(
+                101,
+                "2026-10-05",
+                4.8f,
+                "Demonstrated strong leadership skills."
+            );
+
+        PerformanceReview review3 =
+            new PerformanceReview(
+                102,
+                "2026-10-03",
+                4.9f,
+                "Excellent project management."
+            );
+
+        system.addPerformanceReview(review1);
+        system.addPerformanceReview(review2);
+        system.addPerformanceReview(review3);
+
+        // ------------------------------------------
+        // Display Reviews
+        // ------------------------------------------
+
+        system.displayReviewsForEmployee(101);
+
+        system.displayReviewsForEmployee(102);
+
+        // ------------------------------------------
+        // Update Review
+        // ------------------------------------------
+
+        system.updatePerformanceReview(
+            101,
+            "2026-10-01",
+            4.9f,
+            "Outstanding technical performance."
+        );
+
+        // ------------------------------------------
+        // Display Updated Review
+        // ------------------------------------------
+
+        System.out.println("\nAfter Review Update:");
+
+        system.displayReviewsForEmployee(101);
+
+        sc.close();
+    }
+}

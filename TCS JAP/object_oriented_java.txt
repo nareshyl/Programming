@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ProceduralStudentRecord {
+
+    static ArrayList<String> names = new ArrayList<>();
+    static ArrayList<Integer> rollNumbers = new ArrayList<>();
+    static ArrayList<String> grades = new ArrayList<>();
+
+    // Add student
+    static void addStudent(String name, int rollNo, String grade) {
+        names.add(name);
+        rollNumbers.add(rollNo);
+        grades.add(grade);
+
+        System.out.println("Student added successfully.");
+    }
+
+    // Update student
+    static void updateStudent(int rollNo, String newName, String newGrade) {
+        for (int i = 0; i < rollNumbers.size(); i++) {
+            if (rollNumbers.get(i) == rollNo) {
+                names.set(i, newName);
+                grades.set(i, newGrade);
+
+                System.out.println("Student updated successfully.");
+                return;
+            }
+        }
+
+        System.out.println("Student not found.");
+    }
+
+    // Delete student
+    static void deleteStudent(int rollNo) {
+        for (int i = 0; i < rollNumbers.size(); i++) {
+            if (rollNumbers.get(i) == rollNo) {
+                names.remove(i);
+                rollNumbers.remove(i);
+                grades.remove(i);
+
+                System.out.println("Student deleted successfully.");
+                return;
+            }
+        }
+
+        System.out.println("Student not found.");
+    }
+
+    // Display students
+    static void displayStudents() {
+
+        if (rollNumbers.isEmpty()) {
+            System.out.println("No student records available.");
+            return;
+        }
+
+        System.out.println("\n---------------------------------------------");
+        System.out.printf("%-15s %-10s %-10s%n",
+                "Name", "Roll No", "Grade");
+        System.out.println("---------------------------------------------");
+
+        for (int i = 0; i < rollNumbers.size(); i++) {
+            System.out.printf("%-15s %-10d %-10s%n",
+                    names.get(i),
+                    rollNumbers.get(i),
+                    grades.get(i));
+        }
+
+        System.out.println("---------------------------------------------");
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        addStudent("Arun", 101, "A");
+        addStudent("Bala", 102, "B");
+        addStudent("Charan", 103, "A+");
+
+        displayStudents();
+
+        updateStudent(102, "Bala Kumar", "A");
+
+        displayStudents();
+
+        deleteStudent(103);
+
+        displayStudents();
+
+        sc.close();
+    }
+}

@@ -1,0 +1,95 @@
+// Base Robot class
+class Robot {
+
+    void move() {
+        System.out.println("Robot is moving.");
+    }
+
+    void stop() {
+        System.out.println("Robot has stopped.");
+    }
+
+    void fly() {
+        System.out.println("Flying is not supported.");
+    }
+
+    void swim() {
+        System.out.println("Swimming is not supported.");
+    }
+}
+
+
+// Flying Robot
+class FlyingRobot extends Robot {
+
+    @Override
+    void move() {
+        System.out.println("Flying robot is moving through the air.");
+    }
+
+    @Override
+    void fly() {
+        System.out.println("Flying robot is flying.");
+    }
+}
+
+
+// Swimming Robot
+class SwimmingRobot extends Robot {
+
+    @Override
+    void move() {
+        System.out.println("Swimming robot is moving in water.");
+    }
+
+    @Override
+    void swim() {
+        System.out.println("Swimming robot is swimming.");
+    }
+}
+
+
+// Flying + Swimming Robot
+class AmphibiousRobot extends Robot {
+
+    @Override
+    void move() {
+        System.out.println("Amphibious robot is moving.");
+    }
+
+    @Override
+    void fly() {
+        System.out.println("Amphibious robot is flying.");
+    }
+
+    @Override
+    void swim() {
+        System.out.println("Amphibious robot is swimming.");
+    }
+}
+
+
+// Main class
+public class Main {
+
+    public static void main(String[] args) {
+
+        Robot[] robots = {
+            new Robot(),
+            new FlyingRobot(),
+            new SwimmingRobot(),
+            new AmphibiousRobot()
+        };
+
+        for (Robot robot : robots) {
+
+            System.out.println("\n--- Robot ---");
+
+            robot.move();
+            robot.stop();
+
+            robot.fly();
+            robot.swim();
+        }
+    }
+}
