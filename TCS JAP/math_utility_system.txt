@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+// Base class
+class MathOperation {
+
+    // Compile-time polymorphism - Method Overloading
+
+    public double add(double a, double b) {
+        return a + b;
+    }
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public double subtract(double a, double b) {
+        return a - b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+}
+
+// Derived class
+class AdvancedMath extends MathOperation {
+
+    // Runtime polymorphism - Method Overriding
+
+    public double integrate(double constant, double x) {
+        // Integral of constant = constant * x
+        return constant * x;
+    }
+
+    public double differentiate(double coefficient, double power, double x) {
+        // Differentiation of coefficient*x^power
+        return coefficient * power * Math.pow(x, power - 1);
+    }
+}
+
+public class Exercise1 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Runtime polymorphism
+        MathOperation math = new AdvancedMath();
+
+        System.out.println("===== MATH UTILITY SYSTEM =====");
+
+        System.out.print("Enter first number: ");
+        double a = sc.nextDouble();
+
+        System.out.print("Enter second number: ");
+        double b = sc.nextDouble();
+
+        System.out.println("\n--- Basic Operations ---");
+
+        System.out.println("Addition = " + math.add(a, b));
+        System.out.println("Subtraction = " + math.subtract(a, b));
+
+        // Access advanced operations
+        AdvancedMath advanced = (AdvancedMath) math;
+
+        System.out.println("\n--- Advanced Operations ---");
+
+        System.out.print("Enter constant for integration: ");
+        double constant = sc.nextDouble();
+
+        System.out.print("Enter upper limit x: ");
+        double x = sc.nextDouble();
+
+        System.out.println(
+            "Integration result = " +
+            advanced.integrate(constant, x)
+        );
+
+        System.out.print("\nEnter coefficient for differentiation: ");
+        double coefficient = sc.nextDouble();
+
+        System.out.print("Enter power: ");
+        double power = sc.nextDouble();
+
+        System.out.print("Enter x value: ");
+        double value = sc.nextDouble();
+
+        System.out.println(
+            "Differentiation result = " +
+            advanced.differentiate(coefficient, power, value)
+        );
+
+        sc.close();
+    }
+}

@@ -1,0 +1,104 @@
+import java.util.Scanner;
+
+// Base interface
+interface ImageFilter {
+
+    void process(String image);
+}
+
+// Blur Filter
+class BlurFilter implements ImageFilter {
+
+    @Override
+    public void process(String image) {
+        System.out.println("Applying Blur Filter to: " + image);
+        System.out.println("Image has been blurred.");
+    }
+}
+
+// Sharpen Filter
+class SharpenFilter implements ImageFilter {
+
+    @Override
+    public void process(String image) {
+        System.out.println("Applying Sharpen Filter to: " + image);
+        System.out.println("Image has been sharpened.");
+    }
+}
+
+// Grayscale Filter
+class GrayscaleFilter implements ImageFilter {
+
+    @Override
+    public void process(String image) {
+        System.out.println("Applying Grayscale Filter to: " + image);
+        System.out.println("Image converted to grayscale.");
+    }
+}
+
+// Additional filter to demonstrate extensibility
+class SepiaFilter implements ImageFilter {
+
+    @Override
+    public void process(String image) {
+        System.out.println("Applying Sepia Filter to: " + image);
+        System.out.println("Sepia effect applied.");
+    }
+}
+
+// Main class
+public class Exercise2 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("===== IMAGE PROCESSING APPLICATION =====");
+
+        System.out.print("Enter image name: ");
+        String image = sc.nextLine();
+
+        System.out.println("\nSelect Filter:");
+        System.out.println("1. Blur");
+        System.out.println("2. Sharpen");
+        System.out.println("3. Grayscale");
+        System.out.println("4. Sepia");
+
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+
+        // Runtime polymorphism
+        ImageFilter filter;
+
+        switch (choice) {
+
+            case 1:
+                filter = new BlurFilter();
+                break;
+
+            case 2:
+                filter = new SharpenFilter();
+                break;
+
+            case 3:
+                filter = new GrayscaleFilter();
+                break;
+
+            case 4:
+                filter = new SepiaFilter();
+                break;
+
+            default:
+                System.out.println("Invalid filter choice.");
+                sc.close();
+                return;
+        }
+
+        System.out.println();
+
+        // Dynamic method dispatch
+        filter.process(image);
+
+        sc.close();
+    }
+}

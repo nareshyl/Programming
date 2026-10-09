@@ -14,6 +14,7 @@ public class Q02_CalculateSalary {
 
         double netSalary = basic + hra + da - deductions;
         System.out.println("Net Salary = " + netSalary);
+        sc.close();
     }
 
     public static void main(String[] args) {

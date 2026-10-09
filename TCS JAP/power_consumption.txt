@@ -1,0 +1,161 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// Base Class
+class Appliance {
+    private int applianceID;
+    private String brand;
+
+    public Appliance(int applianceID, String brand) {
+        this.applianceID = applianceID;
+        this.brand = brand;
+    }
+
+    public int getApplianceID() {
+        return applianceID;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    // Method to be overridden
+    public float calculatePowerConsumption() {
+        return 0.0f;
+    }
+
+    public void displayDetails() {
+        System.out.println("Appliance ID: " + applianceID);
+        System.out.println("Brand: " + brand);
+    }
+}
+
+// Derived Class - Light
+class Light extends Appliance {
+    private float wattage;
+
+    public Light(int applianceID, String brand, float wattage) {
+        super(applianceID, brand);
+        this.wattage = wattage;
+    }
+
+    @Override
+    public float calculatePowerConsumption() {
+        return wattage;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("Appliance Type: Light");
+        System.out.println("Appliance ID: " + getApplianceID());
+        System.out.println("Brand: " + getBrand());
+        System.out.println("Wattage: " + wattage + " W");
+        System.out.println(
+            "Power Consumption: " +
+            calculatePowerConsumption() + " W"
+        );
+    }
+}
+
+// Derived Class - Fan
+class Fan extends Appliance {
+    private int speed;
+
+    public Fan(int applianceID, String brand, int speed) {
+        super(applianceID, brand);
+        this.speed = speed;
+    }
+
+    @Override
+    public float calculatePowerConsumption() {
+        // Assumption based on speed percentage:
+        // Maximum fan consumption = 100 W
+        return (speed / 100.0f) * 100.0f;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("Appliance Type: Fan");
+        System.out.println("Appliance ID: " + getApplianceID());
+        System.out.println("Brand: " + getBrand());
+        System.out.println("Speed: " + speed + "%");
+        System.out.println(
+            "Power Consumption: " +
+            calculatePowerConsumption() + " W"
+        );
+    }
+}
+
+// Main Class
+public class AppliancePowerSystem {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        List<Appliance> appliances = new ArrayList<>();
+
+        System.out.println("===== APPLIANCE POWER CONSUMPTION SYSTEM =====");
+
+        System.out.print("Enter number of appliances: ");
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+
+            System.out.println("\nAppliance " + (i + 1));
+            System.out.println("1. Light");
+            System.out.println("2. Fan");
+
+            System.out.print("Enter appliance type: ");
+            int choice = sc.nextInt();
+
+            System.out.print("Enter Appliance ID: ");
+            int id = sc.nextInt();
+
+            System.out.print("Enter Brand: ");
+            String brand = sc.next();
+
+            if (choice == 1) {
+
+                System.out.print("Enter Wattage: ");
+                float wattage = sc.nextFloat();
+
+                appliances.add(
+                    new Light(id, brand, wattage)
+                );
+
+            } else if (choice == 2) {
+
+                System.out.print("Enter Speed (0-100): ");
+                int speed = sc.nextInt();
+
+                appliances.add(
+                    new Fan(id, brand, speed)
+                );
+
+            } else {
+                System.out.println("Invalid appliance type.");
+                i--;
+            }
+        }
+
+        System.out.println("\n========== APPLIANCE DETAILS ==========");
+
+        // Runtime polymorphism
+        for (Appliance appliance : appliances) {
+
+            System.out.println("\n--------------------------------");
+
+            appliance.displayDetails();
+
+            System.out.println(
+                "Calculated Consumption: " +
+                appliance.calculatePowerConsumption() +
+                " W"
+            );
+        }
+
+        sc.close();
+    }
+}

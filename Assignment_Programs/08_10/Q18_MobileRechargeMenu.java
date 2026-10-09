@@ -44,5 +44,6 @@ public class Q18_MobileRechargeMenu {
                     System.out.println("Invalid choice.");
             }
         } while (choice != 5);
+        sc.close();
     }
 }

@@ -1,0 +1,146 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// Base class
+class Shape {
+    private int shapeID;
+    private String color;
+
+    public Shape(int shapeID, String color) {
+        this.shapeID = shapeID;
+        this.color = color;
+    }
+
+    public int getShapeID() {
+        return shapeID;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    // Methods to be overridden
+    public void draw() {
+        System.out.println("Drawing a generic shape.");
+    }
+
+    public void displayDetails() {
+        System.out.println("Shape ID: " + shapeID);
+        System.out.println("Color: " + color);
+    }
+}
+
+// Derived class - Circle
+class Circle extends Shape {
+    private float radius;
+
+    public Circle(int shapeID, String color, float radius) {
+        super(shapeID, color);
+        this.radius = radius;
+    }
+
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Circle.");
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("Shape Type: Circle");
+        System.out.println("Shape ID: " + getShapeID());
+        System.out.println("Color: " + getColor());
+        System.out.println("Radius: " + radius);
+    }
+}
+
+// Derived class - Rectangle
+class Rectangle extends Shape {
+    private float width;
+    private float height;
+
+    public Rectangle(int shapeID, String color, float width, float height) {
+        super(shapeID, color);
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Rectangle.");
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("Shape Type: Rectangle");
+        System.out.println("Shape ID: " + getShapeID());
+        System.out.println("Color: " + getColor());
+        System.out.println("Width: " + width);
+        System.out.println("Height: " + height);
+    }
+}
+
+// Main class
+public class ShapeDrawingSystem {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        List<Shape> shapes = new ArrayList<>();
+
+        System.out.print("Enter number of shapes: ");
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+
+            System.out.println("\nShape " + (i + 1));
+            System.out.println("1. Circle");
+            System.out.println("2. Rectangle");
+
+            System.out.print("Enter shape type: ");
+            int choice = sc.nextInt();
+
+            System.out.print("Enter Shape ID: ");
+            int id = sc.nextInt();
+
+            System.out.print("Enter Color: ");
+            String color = sc.next();
+
+            if (choice == 1) {
+
+                System.out.print("Enter Radius: ");
+                float radius = sc.nextFloat();
+
+                shapes.add(new Circle(id, color, radius));
+
+            } else if (choice == 2) {
+
+                System.out.print("Enter Width: ");
+                float width = sc.nextFloat();
+
+                System.out.print("Enter Height: ");
+                float height = sc.nextFloat();
+
+                shapes.add(new Rectangle(id, color, width, height));
+
+            } else {
+                System.out.println("Invalid shape type.");
+                i--;
+            }
+        }
+
+        System.out.println("\n========== SHAPE DETAILS ==========");
+
+        // Runtime polymorphism
+        for (Shape shape : shapes) {
+
+            System.out.println("\n--------------------------------");
+
+            shape.draw();
+            shape.displayDetails();
+        }
+
+        sc.close();
+    }
+}

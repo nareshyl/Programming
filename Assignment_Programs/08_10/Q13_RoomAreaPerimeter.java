@@ -15,5 +15,6 @@ public class Q13_RoomAreaPerimeter {
 
         System.out.println("Area = " + area);
         System.out.println("Perimeter = " + perimeter);
+        sc.close();
     }
 }

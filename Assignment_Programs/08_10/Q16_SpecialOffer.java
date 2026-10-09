@@ -20,5 +20,6 @@ public class Q16_SpecialOffer {
         } else {
             System.out.println("Customer is not eligible for the special offer.");
         }
+        sc.close();
     }
 }

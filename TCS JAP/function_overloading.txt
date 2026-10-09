@@ -1,0 +1,59 @@
+class Instrument {
+
+    // Function Overloading - Compile-Time Polymorphism
+    void readData(int value) {
+        System.out.println("Reading integer data: " + value);
+    }
+
+    void readData(float value) {
+        System.out.println("Reading float data: " + value);
+    }
+
+    void readData(String source) {
+        System.out.println("Reading data from source: " + source);
+    }
+
+    // Method for Runtime Polymorphism
+    void processData() {
+        System.out.println("Processing data in generic instrument.");
+    }
+}
+
+class TemperatureSensor extends Instrument {
+
+    @Override
+    void processData() {
+        System.out.println("Temperature Sensor: Processing temperature data.");
+    }
+}
+
+class PressureSensor extends Instrument {
+
+    @Override
+    void processData() {
+        System.out.println("Pressure Sensor: Processing pressure data.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        // Compile-Time Polymorphism
+        Instrument instrument = new Instrument();
+
+        instrument.readData(100);
+        instrument.readData(25.5f);
+        instrument.readData("External Sensor");
+
+        System.out.println();
+
+        // Runtime Polymorphism
+        Instrument obj;
+
+        obj = new TemperatureSensor();
+        obj.processData();
+
+        obj = new PressureSensor();
+        obj.processData();
+    }
+}

@@ -9,5 +9,7 @@ public class Q17_EvenOddTernary {
 
         String result = (number % 2 == 0) ? "Even" : "Odd";
         System.out.println("The number is " + result);
+
+        sc.close();
     }
 }

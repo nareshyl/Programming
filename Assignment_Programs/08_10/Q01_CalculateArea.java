@@ -10,6 +10,7 @@ public class Q01_CalculateArea {
 
         double area = 0.5 * base * height;
         System.out.println("Area of triangle = " + area);
+        sc.close();
     }
 
     public static void main(String[] args) {

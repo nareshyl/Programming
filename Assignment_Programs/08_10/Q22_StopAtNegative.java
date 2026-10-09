@@ -16,5 +16,6 @@ public class Q22_StopAtNegative {
         }
 
         System.out.println("Negative number entered. Program stopped.");
+        sc.close();
     }
 }

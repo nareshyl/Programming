@@ -14,5 +14,7 @@ public class Q19_Factorial {
         }
 
         System.out.println("Factorial of " + n + " = " + factorial);
+
+        sc.close();
     }
 }

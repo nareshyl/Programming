@@ -23,5 +23,7 @@ public class Q15_PlayerScores {
 
         int highest = Math.max(a, Math.max(b, c));
         System.out.println("Highest score = " + highest);
+
+        sc.close();
     }
 }

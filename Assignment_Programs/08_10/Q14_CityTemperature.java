@@ -17,5 +17,7 @@ public class Q14_CityTemperature {
         } else {
             System.out.println("Both cities have equal temperatures.");
         }
+
+        sc.close();
     }
 }
