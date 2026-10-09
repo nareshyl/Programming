@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
+<<<<<<< HEAD
 public class Q03_CalculateTravelCost {
+=======
+public class  Q03_CalculateTravelCost {
+>>>>>>> e511cba ( Assignment)
     static void calculateTravelCost() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter distance (km): ");
@@ -18,12 +22,19 @@ public class Q03_CalculateTravelCost {
 
         System.out.println("Fuel Cost = " + fuelCost);
         System.out.println("Total Travel Cost = " + totalCost);
+<<<<<<< HEAD
         sc.close();
+=======
+>>>>>>> e511cba ( Assignment)
     }
 
     public static void main(String[] args) {
         calculateTravelCost();
     }
+<<<<<<< HEAD
    
 }
 
+=======
+}
+>>>>>>> e511cba ( Assignment)
