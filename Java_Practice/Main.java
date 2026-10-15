@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class Main {
+    static void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+
+        if (i >= 0) {
+            int j = nums.length - 1;
+
+            while (nums[j] <= nums[i]) {
+                j--;
+            }
+
+            swap(nums, i, j);
+        }
+
+        reverse(nums, i + 1, nums.length - 1);
+    }
+
+    static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    static void reverse(int[] nums, int left, int right) {
+        while (left < right) {
+            swap(nums, left++, right--);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] nums = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        nextPermutation(nums);
+
+        for (int i = 0; i < n; i++) {
+            if (i > 0) System.out.print(" ");
+            System.out.print(nums[i]);
+        }
+
+        System.out.println();
+        sc.close();
+    }
+}
